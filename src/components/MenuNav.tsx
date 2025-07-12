@@ -94,7 +94,7 @@ const MenuNav = () => {
           </ul>
         </li>
         <li>
-          <Link href="/news-centre">Blogs</Link>
+          <Link href="/blogs">Blogs</Link>
         </li>
         <li>
           <Link href="/contact">Contact Us</Link>
