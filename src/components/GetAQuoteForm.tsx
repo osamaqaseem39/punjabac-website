@@ -44,18 +44,13 @@ const GetAQuoteForm: React.FC<GetAQuoteFormProps> = ({
     setSuccess("");
     setError("");
     try {
-      const formData = new FormData();
-      formData.append("name", form.name);
-      formData.append("email", form.email);
-      formData.append("phone", form.phone);
-      formData.append("details", form.details);
-      // image field is removed, but if you add it back, include:
-      // if (form.image) formData.append("image", form.image);
-
-      const res = await api.post("/quote", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-
+      const payload = {
+        name: form.name,
+        email: form.email,
+        phone: form.phone,
+        details: form.details,
+      };
+      const res = await api.post("/quotes", payload);
       setSuccess(successMessage);
       setForm({ name: "", email: "", phone: "", details: "", image: null });
     } catch (err: any) {

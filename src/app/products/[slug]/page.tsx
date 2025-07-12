@@ -245,14 +245,6 @@ const ProductDetailPage = () => {
                       </div>
                       <span className="text-gray-700">Warranty Included</span>
                     </div>
-                    <div className="flex items-center">
-                      <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center mr-3">
-                        <svg className="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                      </div>
-                      <span className="text-gray-700">Fast Delivery</span>
-                    </div>
                   </div>
                 </div>
               </div>

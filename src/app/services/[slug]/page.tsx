@@ -133,7 +133,7 @@ const ServiceDetailPage = () => {
       </div>
 
       {/* Contact CTA */}
-      <div className="bg-indigo-600 rounded-xl p-8 text-center text-white">
+      <div className="bg-punjabac-brand rounded-xl p-8 text-center text-white">
         <h2 className="text-2xl font-bold mb-4">Ready to Get Started?</h2>
                   <p className="text-punjabac-brand/80 mb-6">
           Contact us today to schedule your service or get a free quote.
