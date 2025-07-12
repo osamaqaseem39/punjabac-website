@@ -17,6 +17,33 @@ async function fetchBlog(slug: string): Promise<Blog | null> {
   return data.status === 'published' ? data : null;
 }
 
+function formatBlogContent(text: string) {
+  // Headings
+  text = text.replace(/^# (.+)$/gm, '<h1>$1</h1>');
+  text = text.replace(/^## (.+)$/gm, '<h2>$1</h2>');
+  text = text.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+  // Bold and italic
+  text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  text = text.replace(/__(.+?)__/g, '<em>$1</em>');
+  // Lists
+  text = text.replace(/^- (.+)$/gm, '<li>$1</li>').replace(/((?:<li>.*<\/li>\n?)+)/g, '<ul>$1</ul>');
+  text = text.replace(/^\d+\. (.+)$/gm, '<li>$1</li>').replace(/((?:<li>.*<\/li>\n?)+)/g, '<ol>$1</ol>');
+  // Code
+  text = text.replace(/`(.+?)`/g, '<code>$1</code>');
+  // Blockquotes
+  text = text.replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>');
+  // Horizontal lines
+  text = text.replace(/^---$/gm, '<hr>');
+  // Links and images
+  text = text.replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" target="_blank">$1</a>');
+  text = text.replace(/!img\[(.+?)\]\((.+?)\)/g, '<img src="$2" alt="$1" class="blog-img" />');
+  // Alignment tags
+  text = text.replace(/<center>(.+?)<\/center>/g, '<div style="text-align: center">$1</div>');
+  text = text.replace(/<right>(.+?)<\/right>/g, '<div style="text-align: right">$1</div>');
+  text = text.replace(/<left>(.+?)<\/left>/g, '<div style="text-align: left">$1</div>');
+  return text;
+}
+
 export default async function BlogDetailPage({ params }: { params: { slug: string } }) {
   const blog = await fetchBlog(params.slug);
 
@@ -38,10 +65,10 @@ export default async function BlogDetailPage({ params }: { params: { slug: strin
         <img
           src={blog.featuredImage}
           alt={blog.title}
-          className="w-full h-64 object-cover rounded mb-8"
+          className="w-full h-64 object-cover rounded mb-8 shadow-lg border blog-img"
         />
       )}
-      <div className="prose max-w-none text-gray-800" dangerouslySetInnerHTML={{ __html: blog.content }} />
+      <div className="prose prose-lg max-w-none text-gray-800 blog-content" style={{lineHeight: '1.8'}} dangerouslySetInnerHTML={{ __html: formatBlogContent(blog.content) }} />
       <a href="/blogs" className="inline-block mt-8 text-punjabac-brand hover:underline">← Back to Blogs</a>
     </main>
   );
