@@ -1,4 +1,11 @@
+import axios from "axios";
+
 const API_BASE_URL = 'https://punjabac-admin.vercel.app/api';
+
+// Create and export an Axios instance for API calls
+export const api = axios.create({
+  baseURL: API_BASE_URL,
+});
 
 export interface Product {
   _id: string;

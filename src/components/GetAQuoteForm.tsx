@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { api } from "@/services/api";
 
 interface GetAQuoteFormProps {
   title?: string;
@@ -48,21 +49,21 @@ const GetAQuoteForm: React.FC<GetAQuoteFormProps> = ({
       formData.append("email", form.email);
       formData.append("phone", form.phone);
       formData.append("details", form.details);
-      if (form.image) formData.append("image", form.image);
+      // image field is removed, but if you add it back, include:
+      // if (form.image) formData.append("image", form.image);
 
-      const res = await fetch("/api/quote", {
-        method: "POST",
-        body: formData,
+      const res = await api.post("/quote", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
       });
-      if (res.ok) {
-        setSuccess(successMessage);
-        setForm({ name: "", email: "", phone: "", details: "", image: null });
+
+      setSuccess(successMessage);
+      setForm({ name: "", email: "", phone: "", details: "", image: null });
+    } catch (err: any) {
+      if (err.response && err.response.data && err.response.data.error) {
+        setError(err.response.data.error);
       } else {
-        const data = await res.json();
-        setError(data.error || "Something went wrong. Please try again.");
+        setError("Failed to submit. Please try again.");
       }
-    } catch (err) {
-      setError("Failed to submit. Please try again.");
     } finally {
       setLoading(false);
     }

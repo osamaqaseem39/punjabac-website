@@ -89,26 +89,26 @@ export default function Hero() {
                   className="w-full h-48 object-cover rounded-lg mb-4"
                 />
                 <div className="bg-gradient-to-br from-indigo-200 to-punjabac-brand rounded-xl p-6 text-punjabac-brand">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-xl font-semibold">AC System Check</h3>
-                    <div className="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-xl font-semibold">AC System Check</h3>
+                  <div className="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center">
                       <svg className="w-6 h-6 text-punjabac-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                    </div>
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
                   </div>
-                  <div className="space-y-3">
-                    <div className="flex items-center space-x-3">
-                      <div className="w-3 h-3 bg-green-400 rounded-full"></div>
-                      <span>Refrigerant Level: Optimal</span>
-                    </div>
-                    <div className="flex items-center space-x-3">
-                      <div className="w-3 h-3 bg-green-400 rounded-full"></div>
-                      <span>Compressor: Working</span>
-                    </div>
-                    <div className="flex items-center space-x-3">
-                      <div className="w-3 h-3 bg-green-400 rounded-full"></div>
-                      <span>Air Flow: Normal</span>
+                </div>
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-3 h-3 bg-green-400 rounded-full"></div>
+                    <span>Refrigerant Level: Optimal</span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <div className="w-3 h-3 bg-green-400 rounded-full"></div>
+                    <span>Compressor: Working</span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <div className="w-3 h-3 bg-green-400 rounded-full"></div>
+                    <span>Air Flow: Normal</span>
                     </div>
                   </div>
                 </div>
