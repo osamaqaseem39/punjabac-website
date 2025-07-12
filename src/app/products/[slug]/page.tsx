@@ -1,57 +1,25 @@
-'use client';
-
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
+import React from 'react';
 import Link from 'next/link';
-import { productsApi, Product } from '../../../services/api';
+import { productsApi } from '../../../services/api';
 import AutoCompanies from '../../../components/AutoCompanies';
+import Image from 'next/image';
 
-const ProductDetailPage = () => {
-  const params = useParams();
-  const slug = params.slug as string;
-  const [product, setProduct] = useState<Product | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const [showImageModal, setShowImageModal] = useState(false);
-  const [showFullDesc, setShowFullDesc] = useState(false);
-  const maxDescLength = 200;
-  const isLongDesc = product?.description && product.description.length > maxDescLength;
-  const displayDesc = showFullDesc || !isLongDesc
-    ? product?.description
-    : product?.description?.slice(0, maxDescLength) + '...';
-
-  useEffect(() => {
-    const fetchProduct = async () => {
-      if (!slug) return;
-      
-      try {
-        const data = await productsApi.getBySlug(slug);
-        setProduct(data);
-        if (data?.featuredImage) {
-          setSelectedImage(data.featuredImage);
-        }
-      } catch (error) {
-        console.error('Error fetching product:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProduct();
-  }, [slug]);
-
-  if (loading) {
-    return (
-      <main className="min-h-screen bg-gradient-to-br from-gray-50 to-indigo-50">
-        <div className="flex justify-center items-center h-64">
-          <div className="relative">
-            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-indigo-600"></div>
-            <div className="mt-4 text-center text-gray-600">Loading product details...</div>
-          </div>
-        </div>
-      </main>
-    );
+export async function generateStaticParams() {
+  try {
+    const products = await productsApi.getAll();
+    return products.map(product => ({
+      slug: productsApi.generateSlug(product.title, product._id)
+    }));
+  } catch (error) {
+    console.error('Error generating static params for products:', error);
+    return [];
   }
+}
+
+// Server Component that fetches data
+async function ProductDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const product = await productsApi.getBySlug(slug);
 
   if (!product) {
     return (
@@ -104,22 +72,15 @@ const ProductDetailPage = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
               {/* Product Images */}
               <div className="relative">
-                {selectedImage ? (
+                {product.featuredImage ? (
                   <div className="relative">
                     <img
-                      src={selectedImage}
+                      src={product.featuredImage}
                       alt={product.title}
-                      className="image-zoom w-full h-96 lg:h-full object-cover cursor-pointer"
-                      onClick={() => setShowImageModal(true)}
+                      width={600}
+                      height={400}
+                      className="w-full h-96 lg:h-full object-cover"
                     />
-                    <button
-                      onClick={() => setShowImageModal(true)}
-                      className="absolute top-4 right-4 bg-white/80 backdrop-blur-sm p-2 rounded-full hover:bg-white transition-colors"
-                    >
-                      <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                      </svg>
-                    </button>
                   </div>
                 ) : (
                   <div className="w-full h-96 lg:h-full bg-gradient-to-br from-indigo-100 to-indigo-200 flex items-center justify-center">
@@ -134,21 +95,18 @@ const ProductDetailPage = () => {
                   <div className="p-4 bg-gray-50">
                     <div className="flex space-x-2 overflow-x-auto">
                       {allImages.map((image, index) => (
-                        <button
+                        <div
                           key={index}
-                          onClick={() => setSelectedImage(image)}
-                          className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all ${
-                            selectedImage === image
-                              ? 'border-indigo-600 shadow-lg'
-                              : 'border-gray-200 hover:border-gray-300'
-                          }`}
+                          className="flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 border-gray-200"
                         >
                           <img
                             src={image}
                             alt={`${product.title} - Image ${index + 1}`}
+                            width={64}
+                            height={64}
                             className="w-full h-full object-cover"
                           />
-                        </button>
+                        </div>
                       ))}
                     </div>
                   </div>
@@ -169,16 +127,7 @@ const ProductDetailPage = () => {
 
                 <div className="prose prose-gray max-w-none mb-8">
                   <p className="text-gray-600 leading-relaxed text-lg">
-                    {displayDesc}
-                    {isLongDesc && (
-                      <button
-                        type="button"
-                        className="ml-2 text-punjabac-brand font-semibold hover:underline focus:outline-none"
-                        onClick={() => setShowFullDesc((v) => !v)}
-                      >
-                        {showFullDesc ? 'Show Less' : 'Read More'}
-                      </button>
-                    )}
+                    {product.description}
                   </p>
                 </div>
 
@@ -245,6 +194,14 @@ const ProductDetailPage = () => {
                       </div>
                       <span className="text-gray-700">Warranty Included</span>
                     </div>
+                    <div className="flex items-center">
+                      <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center mr-3">
+                        <svg className="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <span className="text-gray-700">Expert Support</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -253,39 +210,34 @@ const ProductDetailPage = () => {
         </div>
       </section>
 
-      {/* Related Products Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12">Related Products</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Related products would be populated here */}
-          </div>
-        </div>
-      </section>
-
       {/* Auto Companies Section */}
       <AutoCompanies />
 
-      {/* Image Modal */}
-      {showImageModal && selectedImage && (
-        <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
-          <div className="relative max-w-4xl max-h-full">
-            <button
-              onClick={() => setShowImageModal(false)}
-              className="absolute -top-12 right-0 text-white hover:text-gray-300 text-4xl font-bold"
+      {/* Contact CTA */}
+      <section className="bg-punjabac-brand py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+          <h2 className="text-3xl font-bold mb-4">Need Help Choosing?</h2>
+          <p className="text-xl mb-8 text-punjabac-brand/80">
+            Our experts are here to help you find the perfect auto AC parts for your vehicle.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a 
+              href="/contact" 
+              className="bg-white text-punjabac-brand px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
             >
-              ×
-            </button>
-            <img
-              src={selectedImage}
-              alt={product.title}
-              className="max-w-full max-h-full object-contain rounded-lg"
-            />
+              Get Expert Advice
+            </a>
+            <a 
+              href="tel:92-345-8428889" 
+              className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-punjabac-brand transition-colors"
+            >
+              Call Now: 92-345-8428889
+            </a>
           </div>
         </div>
-      )}
+      </section>
     </main>
   );
-};
+}
 
 export default ProductDetailPage; 

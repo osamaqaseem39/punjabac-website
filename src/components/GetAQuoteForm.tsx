@@ -30,7 +30,7 @@ const GetAQuoteForm: React.FC<GetAQuoteFormProps> = ({
   const [error, setError] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value, files } = e.target as any;
+    const { name, value, files } = e.target as { name: string; value: string; files?: FileList };
     if (name === "image" && files && files[0]) {
       setForm((prev) => ({ ...prev, image: files[0] }));
     } else {
@@ -50,14 +50,25 @@ const GetAQuoteForm: React.FC<GetAQuoteFormProps> = ({
         phone: form.phone,
         details: form.details,
       };
-      const res = await api.post("/quotes", payload);
+      await api.post("/quotes", payload);
       setSuccess(successMessage);
       setForm({ name: "", email: "", phone: "", details: "", image: null });
-    } catch (err: any) {
-      if (err.response && err.response.data && err.response.data.error) {
+    } catch (err: unknown) {
+      if (
+        err &&
+        typeof err === 'object' &&
+        'response' in err &&
+        err.response &&
+        typeof err.response === 'object' &&
+        'data' in err.response &&
+        err.response.data &&
+        typeof err.response.data === 'object' &&
+        'error' in err.response.data &&
+        typeof err.response.data.error === 'string'
+      ) {
         setError(err.response.data.error);
       } else {
-        setError("Failed to submit. Please try again.");
+        setError('An unexpected error occurred.');
       }
     } finally {
       setLoading(false);

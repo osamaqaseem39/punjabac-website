@@ -7,7 +7,13 @@ const WhoWeAre = () => (
         {/* Logo above heading */}
         <div className="flex justify-center items-center">
           <div className="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-punjabac-brand bg-white flex items-center justify-center overflow-hidden shadow-md">
-            <img src="/images/logo.png" alt="Punjab Car AC Logo" className="w-24 h-24 md:w-32 md:h-32 object-contain" />
+            <img
+              src="/images/logo.png"
+              alt="Punjab Car AC Logo"
+              width={128}
+              height={128}
+              className="w-24 h-24 md:w-32 md:h-32 object-contain"
+            />
           </div>
         </div>
         {/* Heading and Text Content */}

@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 import ContactSection from '../../components/ContactSection';
 
 const OurBrandsPage = () => {
@@ -40,7 +39,7 @@ const OurBrandsPage = () => {
           <div key={index} className="bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow">
             <div className="text-center mb-6">
               <div className="w-32 h-32 mx-auto mb-4 bg-gray-100 rounded-lg flex items-center justify-center">
-                <Image
+                <img
                   src={brand.logo}
                   alt={`${brand.name} logo`}
                   width={120}

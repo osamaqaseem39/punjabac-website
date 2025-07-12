@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 
 export default function GetQuotePage() {
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<{ name: string; email: string; phone: string; details: string; image: File | null }>({
     name: "",
     email: "",
     phone: "",
@@ -14,7 +14,7 @@ export default function GetQuotePage() {
   const [error, setError] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value, files } = e.target as any;
+    const { name, value, files } = e.target as unknown as { name: string; value: string; files: FileList | null };
     if (name === "image" && files && files[0]) {
       setForm((prev) => ({ ...prev, image: files[0] }));
     } else {
@@ -46,7 +46,7 @@ export default function GetQuotePage() {
         const data = await res.json();
         setError(data.error || "Something went wrong. Please try again.");
       }
-    } catch (err) {
+    } catch {
       setError("Failed to submit. Please try again.");
     } finally {
       setLoading(false);

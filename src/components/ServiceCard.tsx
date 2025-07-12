@@ -2,13 +2,13 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Service } from '../services/api';
+import Image from 'next/image';
+import { Service, getImageUrl } from '../services/api';
 
 interface ServiceCardProps {
   service: Service;
   variant?: 'default' | 'homepage' | 'compact';
   showDate?: boolean;
-  showGalleryCount?: boolean;
   showCategoryBadge?: boolean;
   showHoverEffects?: boolean;
   className?: string;
@@ -18,7 +18,6 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
   service,
   variant = 'default',
   showDate = true,
-  showGalleryCount = false,
   showCategoryBadge = false,
   showHoverEffects = true,
   className = ''
@@ -26,20 +25,8 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
   const [imageError, setImageError] = useState(false);
   const [imageLoading, setImageLoading] = useState(true);
 
-  // Handle image URL processing
-  const getImageUrl = (imagePath: string | undefined) => {
-    if (!imagePath) return null;
-    
-    if (imagePath.startsWith('http')) {
-      return imagePath;
-    } else if (imagePath.startsWith('/uploads/')) {
-      return `https://punjabac-admin.vercel.app${imagePath}`;
-    } else {
-      return `https://punjabac-admin.vercel.app/uploads/services/${imagePath}`;
-    }
-  };
-
-  const imageUrl = getImageUrl(service.featuredImage);
+  // Get image URL using utility function
+  const imageUrl = getImageUrl(service.featuredImage, 'services');
   const slug = `/services/${service.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')}-${service._id}`;
 
   // Get service-specific icon based on title
@@ -120,11 +107,14 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
             <img
               src={imageUrl}
               alt={service.title}
+              width={600}
+              height={315}
               className={`w-full h-56 object-cover transition-all duration-500 ${
                 imageLoading ? 'opacity-0' : 'opacity-100'
               } ${showHoverEffects ? 'group-hover:scale-110' : ''}`}
-              onLoad={handleImageLoad}
-              onError={handleImageError}
+              onLoad={() => handleImageLoad()}
+              onError={() => handleImageError()}
+              style={{ objectFit: 'cover', width: '100%', height: '14rem' }}
             />
             {/* Gradient overlay for better text readability */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>

@@ -17,7 +17,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "All fields except image are required." }, { status: 400 });
     }
 
-    let imagePath = "";
     if (image && image.size > 0) {
       const buffer = Buffer.from(await image.arrayBuffer());
       const uploadDir = path.join(process.cwd(), "public", "uploads", "quotes");
@@ -26,7 +25,6 @@ export async function POST(req: NextRequest) {
       const fileName = `${Date.now()}-${Math.random().toString(36).slice(2,8)}${ext}`;
       const filePath = path.join(uploadDir, fileName);
       await fs.writeFile(filePath, buffer);
-      imagePath = `/uploads/quotes/${fileName}`;
     }
 
     // Simulate saving the quote (no database)

@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { colors, colorSchemes } from '../styles/colors';
+import { colorSchemes } from '../styles/colors';
 
 const BrandColorExample = () => {
   return (

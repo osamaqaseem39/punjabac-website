@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 import ContactSection from '../../components/ContactSection';
 
 const OurClientsPage = () => {
@@ -119,7 +118,7 @@ const OurClientsPage = () => {
             <div key={index} className="bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow">
               <div className="text-center mb-6">
                 <div className="w-24 h-24 mx-auto mb-4 bg-gray-100 rounded-lg flex items-center justify-center">
-                  <Image
+                  <img
                     src={client.logo}
                     alt={`${client.name} logo`}
                     width={80}
@@ -141,7 +140,7 @@ const OurClientsPage = () => {
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold mb-4">Success Stories</h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Real examples of how we've helped our clients achieve their goals and maintain their vehicles.
+            Real examples of how we&apos;ve helped our clients achieve their goals and maintain their vehicles.
           </p>
         </div>
         
@@ -177,7 +176,7 @@ const OurClientsPage = () => {
             <div key={index} className="bg-white rounded-xl shadow-lg p-8">
               <div className="flex items-center mb-6">
                 <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mr-4">
-                  <Image
+                  <img
                     src={testimonial.image}
                     alt={testimonial.name}
                     width={60}
@@ -200,7 +199,7 @@ const OurClientsPage = () => {
                 ))}
               </div>
               
-              <p className="text-gray-600 italic">"{testimonial.text}"</p>
+              <p className="text-gray-600 italic">&quot;{testimonial.text}&quot;</p>
             </div>
           ))}
         </div>

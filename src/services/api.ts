@@ -1,11 +1,25 @@
 import axios from "axios";
 
 const API_BASE_URL = 'https://punjabac-admin.vercel.app/api';
+const ADMIN_BASE_URL = 'https://punjabac.osamaqaseem.online';
 
 // Create and export an Axios instance for API calls
 export const api = axios.create({
   baseURL: API_BASE_URL,
 });
+
+// Utility function to get full image URL
+export const getImageUrl = (imagePath: string | undefined, type: 'products' | 'services' = 'products'): string | null => {
+  if (!imagePath) return null;
+  
+  if (imagePath.startsWith('http')) {
+    return imagePath;
+  } else if (imagePath.startsWith('/uploads/')) {
+    return `${ADMIN_BASE_URL}${imagePath}`;
+  } else {
+    return `${ADMIN_BASE_URL}/uploads/${type}/${imagePath}`;
+  }
+};
 
 export interface Product {
   _id: string;

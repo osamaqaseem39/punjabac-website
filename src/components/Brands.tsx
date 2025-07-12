@@ -17,6 +17,8 @@ const Brands = () => {
               <img
                 src={brand.src}
                 alt={brand.name}
+                width={120}
+                height={120}
                 className="h-16 w-auto object-contain mb-2 drop-shadow-md"
                 style={{ height: '4rem' }}
                 loading="lazy"

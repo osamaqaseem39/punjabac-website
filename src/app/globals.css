@@ -248,6 +248,37 @@ body, html {
   }
 }
 
+/* Marquee animation for AutoCompanies */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Responsive animation speed for marquee */
+@media (max-width: 768px) {
+  .animate-marquee {
+    animation-duration: 20s;
+  }
+}
+
+@media (min-width: 1024px) {
+  .animate-marquee {
+    animation-duration: 40s;
+  }
+}
+
 @keyframes slideInUp {
   from {
     opacity: 0;

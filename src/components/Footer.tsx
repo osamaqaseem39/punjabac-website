@@ -8,7 +8,7 @@ export default function Footer() {
           {/* Company Info */}
           <div className="lg:col-span-1 min-w-[180px]">
             <div className="mb-6 flex flex-col items-start">
-              <img src="/images/logo.png" alt="Punjab AC Logo" className="h-20 w-auto mb-2" />
+              <img src="/images/logo.png" alt="Punjab AC Logo" width={200} height={80} className="h-20 w-auto mb-2" />
               <div className="text-md text-gray-300 mb-1">Professional car air conditioning services with over 30 years of experience. Trusted by customers nationwide for quality and reliability.</div>
             </div>
             <div className="flex space-x-4">

@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 import ContactSection from '../../components/ContactSection';
 
 const OurTeamPage = () => {
@@ -8,19 +7,20 @@ const OurTeamPage = () => {
       <div className="text-center mb-16">
         <h1 className="text-4xl md:text-5xl font-bold mb-6">Meet Our Expert Team</h1>
         <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-12">
-          Our sales, marketing, and technical team of professionals are some of the brightest minds in the industry. We focus our energy daily on providing technical solutions to meet the challenges of our clients. Our dedicated professionals work through the entire gamut of air-conditioning techniques and technology, maintenance, and service. The Company ensures that clients are given rapid development and facilitation at our platform of improved competitiveness.
+          Our team of certified AC mechanics and technicians are skilled professionals with years of hands-on experience in automotive air conditioning systems. Every day, our experts diagnose complex AC issues, perform precise repairs, and ensure optimal performance through meticulous maintenance. From compressor replacements to refrigerant recharging, our dedicated technicians work with precision and care, using the latest diagnostic tools and genuine parts. We are committed to delivering reliable, efficient, and long-lasting AC solutions that keep your vehicle comfortable year-round.
         </p>
         
         {/* Team Image */}
         <div className="mb-12">
           <div className="relative max-w-4xl mx-auto">
-            <Image
+            <img
               src="/images/team.jpg"
               alt="Punjab Car AC Team"
               width={800}
               height={600}
               className="rounded-2xl shadow-lg object-cover"
-              priority
+              loading="eager"
+              style={{ maxWidth: '100%', height: 'auto' }}
             />
           </div>
         </div>

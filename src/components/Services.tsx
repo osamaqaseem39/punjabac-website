@@ -143,7 +143,6 @@ const Services = () => {
                       service={service} 
                       variant="homepage" 
                       showDate={false}
-                      showGalleryCount={false}
                       showCategoryBadge={true}
                       showHoverEffects={true}
                     />

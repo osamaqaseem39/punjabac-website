@@ -1,42 +1,23 @@
-'use client';
-
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
+import React from 'react';
 import Link from 'next/link';
-import { servicesApi, Service } from '../../../services/api';
+import { servicesApi } from '../../../services/api';
 
-const ServiceDetailPage = () => {
-  const params = useParams();
-  const slug = params.slug as string;
-  const [service, setService] = useState<Service | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchService = async () => {
-      if (!slug) return;
-      
-      try {
-        const data = await servicesApi.getBySlug(slug);
-        setService(data);
-      } catch (error) {
-        console.error('Error fetching service:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchService();
-  }, [slug]);
-
-  if (loading) {
-    return (
-      <main className="max-w-4xl mx-auto py-12 px-4">
-        <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
-        </div>
-      </main>
-    );
+export async function generateStaticParams() {
+  try {
+    const services = await servicesApi.getAll();
+    return services.map(service => ({
+      slug: servicesApi.generateSlug(service.title, service._id)
+    }));
+  } catch (error) {
+    console.error('Error generating static params for services:', error);
+    return [];
   }
+}
+
+// Server Component that fetches data
+async function ServiceDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const service = await servicesApi.getBySlug(slug);
 
   if (!service) {
     return (
@@ -44,7 +25,7 @@ const ServiceDetailPage = () => {
         <div className="text-center">
           <h1 className="text-3xl font-bold mb-4">Service Not Found</h1>
           <p className="text-gray-600">The service you&apos;re looking for doesn&apos;t exist or has been removed.</p>
-                      <Link href="/services" className="text-punjabac-brand hover:text-punjabac-brand-light mt-4 inline-block">
+          <Link href="/services" className="text-punjabac-brand hover:text-punjabac-brand-light mt-4 inline-block">
             ← Back to Services
           </Link>
         </div>
@@ -55,7 +36,7 @@ const ServiceDetailPage = () => {
   return (
     <main className="max-w-4xl mx-auto py-12 px-4">
       <div className="mb-8">
-                    <Link href="/services" className="text-punjabac-brand hover:text-punjabac-brand-light mb-4 inline-block">
+        <Link href="/services" className="text-punjabac-brand hover:text-punjabac-brand-light mb-4 inline-block">
           ← Back to Services
         </Link>
       </div>
@@ -67,6 +48,8 @@ const ServiceDetailPage = () => {
               <img
                 src={service.featuredImage}
                 alt={service.title}
+                width={600}
+                height={400}
                 className="w-full h-64 md:h-full object-cover"
               />
             </div>
@@ -135,7 +118,7 @@ const ServiceDetailPage = () => {
       {/* Contact CTA */}
       <div className="bg-punjabac-brand rounded-xl p-8 text-center text-white">
         <h2 className="text-2xl font-bold mb-4">Ready to Get Started?</h2>
-                  <p className="text-punjabac-brand/80 mb-6">
+        <p className="text-punjabac-brand/80 mb-6">
           Contact us today to schedule your service or get a free quote.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -155,6 +138,6 @@ const ServiceDetailPage = () => {
       </div>
     </main>
   );
-};
+}
 
 export default ServiceDetailPage; 

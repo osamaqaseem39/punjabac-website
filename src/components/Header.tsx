@@ -23,8 +23,9 @@ export default function Header() {
           <img
             src="/images/logo.png"
             alt="Punjab AC Logo"
+            width={scrolled ? 64 : 140}
+            height={20}
             className={`transition-all duration-300 ${scrolled ? 'w-16' : 'w-36'} h-auto`}
-            style={{ width: scrolled ? 64 : 140, height: 'auto' }}
           />
         </div>
         <MenuNav />

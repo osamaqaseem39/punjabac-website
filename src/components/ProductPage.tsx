@@ -15,6 +15,8 @@ const ProductPage: React.FC<ProductPageProps> = ({ title, image, description }) 
         <img
           src={image}
           alt={title}
+          width={250}
+          height={150}
           className="w-[250px] h-[150px] object-contain rounded shadow-md bg-white"
         />
         <div className="flex-1 text-lg text-gray-700">{description}</div>

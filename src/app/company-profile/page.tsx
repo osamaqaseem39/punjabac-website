@@ -13,7 +13,7 @@ const CompanyProfilePage = () => (
     <section className="mb-12">
       <h2 className="text-2xl font-bold mb-4 text-punjabac-brand">Our Philosophy</h2>
       <p className="text-gray-700 mb-4">
-        "In pursuit of perfect and Cohesion in Green" is always our spiritual motto. The goals are achieved by using highly dependable imported brands of automobile air-conditioning systems & parts such as DENSO, COOL GEAR (Denso), SANDEN, BEHR, etc. The products are excellent in quality and competitive in price.
+        &quot;In pursuit of perfect and Cohesion in Green&quot; is always our spiritual motto. The goals are achieved by using highly dependable imported brands of automobile air-conditioning systems &amp; parts such as DENSO, COOL GEAR (Denso), SANDEN, BEHR, etc. The products are excellent in quality and competitive in price.
       </p>
     </section>
 

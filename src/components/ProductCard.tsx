@@ -2,7 +2,8 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Product } from '../services/api';
+import { Product, getImageUrl } from '../services/api';
+import Image from 'next/image';
 
 interface ProductCardProps {
   product: Product;
@@ -23,17 +24,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   const slug = `${product.title.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-')}-${product._id}`;
   
-  // Handle different image URL formats
-  let imageUrl = product.featuredImage;
-  if (imageUrl) {
-    if (imageUrl.startsWith('http')) {
-      imageUrl = imageUrl;
-    } else if (imageUrl.startsWith('/uploads/')) {
-      imageUrl = `https://punjabac-admin.vercel.app${imageUrl}`;
-    } else {
-      imageUrl = `https://punjabac-admin.vercel.app/uploads/products/${imageUrl}`;
-    }
-  }
+  // Get image URL using utility function
+  const imageUrl = getImageUrl(product.featuredImage, 'products');
 
   // Handle image error
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
@@ -64,7 +56,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
               alt={product.title}
               className={imageClasses}
               onError={handleImageError}
+              width={224}
+              height={140}
               loading="lazy"
+              style={{ objectFit: 'cover', width: '100%', height: showHoverEffects ? '14rem' : '12rem' }}
             />
             {/* Fallback div - hidden by default, shown when image fails */}
             <div 

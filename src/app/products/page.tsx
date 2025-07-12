@@ -5,6 +5,7 @@ import { productsApi, Product } from '../../services/api';
 import AutoCompanies from '../../components/AutoCompanies';
 import ProductCard from '../../components/ProductCard';
 import GetAQuoteForm from '../../components/GetAQuoteForm';
+import Image from 'next/image';
 
 const ProductsPage = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -71,6 +72,8 @@ const ProductsPage = () => {
           className="pointer-events-none select-none absolute bottom-0 right-0 w-[500px] max-w-full opacity-30 blur-sm"
           style={{zIndex: 1}}
           aria-hidden="true"
+          width={500}
+          height={500}
         />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center" style={{zIndex: 2}}>
           <h1 className="text-5xl md:text-6xl font-bold mb-6">

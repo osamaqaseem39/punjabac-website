@@ -1,4 +1,5 @@
 import React from 'react';
+// import Image from 'next/image'; // Removed
 
 const companies = [
   { name: 'BMW', src: '/images/companies/bmw.png' },
@@ -22,7 +23,7 @@ const AutoCompanies = () => {
         
         {/* Marquee Container */}
         <div className="relative overflow-hidden">
-          <div className="flex animate-marquee whitespace-nowrap">
+          <div className="flex whitespace-nowrap animate-marquee">
             {/* First set of companies */}
             {companies.map((company, index) => (
               <div 
@@ -32,8 +33,9 @@ const AutoCompanies = () => {
                 <img
                   src={company.src}
                   alt={company.name}
+                  width={150}
+                  height={150}
                   className="h-16 md:h-20 lg:h-24 w-auto object-contain mb-3 drop-shadow-lg transition-all duration-300 hover:scale-110"
-                  loading="lazy"
                 />
                 <span className="text-sm md:text-base text-gray-600 text-center font-medium">{company.name}</span>
               </div>
@@ -48,8 +50,9 @@ const AutoCompanies = () => {
                 <img
                   src={company.src}
                   alt={company.name}
+                  width={150}
+                  height={150}
                   className="h-16 md:h-20 lg:h-24 w-auto object-contain mb-3 drop-shadow-lg transition-all duration-300 hover:scale-110"
-                  loading="lazy"
                 />
                 <span className="text-sm md:text-base text-gray-600 text-center font-medium">{company.name}</span>
               </div>
@@ -57,39 +60,6 @@ const AutoCompanies = () => {
           </div>
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes marquee {
-          0% {
-            transform: translateX(0);
-          }
-          100% {
-            transform: translateX(-50%);
-          }
-        }
-        
-        .animate-marquee {
-          animation: marquee 30s linear infinite;
-        }
-        
-        /* Pause animation on hover */
-        .animate-marquee:hover {
-          animation-play-state: paused;
-        }
-        
-        /* Responsive animation speed */
-        @media (max-width: 768px) {
-          .animate-marquee {
-            animation-duration: 20s;
-          }
-        }
-        
-        @media (min-width: 1024px) {
-          .animate-marquee {
-            animation-duration: 40s;
-          }
-        }
-      `}</style>
     </section>
   );
 };
