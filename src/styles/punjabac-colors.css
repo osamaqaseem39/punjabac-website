@@ -1,0 +1,139 @@
+/* Punjab AC Custom Brand Colors */
+
+/* Primary Brand Color: #001a33 - Very Dark Navy Blue */
+.bg-punjabac-brand {
+  background-color: #001a33;
+}
+
+.text-punjabac-brand {
+  color: #001a33;
+}
+
+.border-punjabac-brand {
+  border-color: #001a33;
+}
+
+.ring-punjabac-brand {
+  --tw-ring-color: #001a33;
+}
+
+/* Hover states for brand color */
+.hover\:bg-punjabac-brand:hover {
+  background-color: #001a33;
+}
+
+.hover\:text-punjabac-brand:hover {
+  color: #001a33;
+}
+
+.hover\:border-punjabac-brand:hover {
+  border-color: #001a33;
+}
+
+/* Focus states for brand color */
+.focus\:ring-punjabac-brand:focus {
+  --tw-ring-color: #001a33;
+}
+
+.focus\:border-punjabac-brand:focus {
+  border-color: #001a33;
+}
+
+/* Brand color variations */
+.bg-punjabac-brand-light {
+  background-color: #003366; /* Lighter version (old main color) */
+}
+
+.bg-punjabac-brand-dark {
+  background-color: #000d1a; /* Even darker version */
+}
+
+.text-punjabac-brand-light {
+  color: #003366;
+}
+
+.text-punjabac-brand-dark {
+  color: #000d1a;
+}
+
+/* Brand gradients */
+.bg-gradient-to-r-punjabac {
+  background: linear-gradient(to right, #001a33, #003366);
+}
+
+.bg-gradient-to-br-punjabac {
+  background: linear-gradient(to bottom right, #001a33, #003366);
+}
+
+/* Brand color with opacity */
+.bg-punjabac-brand\/10 {
+  background-color: rgba(0, 26, 51, 0.1);
+}
+
+.bg-punjabac-brand\/20 {
+  background-color: rgba(0, 26, 51, 0.2);
+}
+
+.bg-punjabac-brand\/50 {
+  background-color: rgba(0, 26, 51, 0.5);
+}
+
+.bg-punjabac-brand\/80 {
+  background-color: rgba(0, 26, 51, 0.8);
+}
+
+/* Brand color for specific components */
+.btn-punjabac-primary {
+  background-color: #001a33;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.btn-punjabac-primary:hover {
+  background-color: #003366;
+}
+
+.btn-punjabac-secondary {
+  background-color: transparent;
+  color: #001a33;
+  border: 2px solid #001a33;
+  transition: all 0.3s ease;
+}
+
+.btn-punjabac-secondary:hover {
+  background-color: #001a33;
+  color: white;
+}
+
+/* Brand color for cards */
+.card-punjabac {
+  border: 1px solid rgba(0, 26, 51, 0.1);
+  transition: all 0.3s ease;
+}
+
+.card-punjabac:hover {
+  border-color: #001a33;
+  box-shadow: 0 10px 25px rgba(0, 26, 51, 0.15);
+}
+
+/* Brand color for badges */
+.badge-punjabac {
+  background-color: #001a33;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* Brand color for links */
+.link-punjabac {
+  color: #001a33;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.link-punjabac:hover {
+  color: #003366;
+  text-decoration: underline;
+} 

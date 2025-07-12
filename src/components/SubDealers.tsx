@@ -90,7 +90,7 @@ const SubDealers = () => {
     <section className="py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#003366] mb-4">Sub Dealers of Punjab Car AC</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-punjabac-brand mb-4">Sub Dealers of Punjab Car AC</h2>
           <p className="text-lg text-gray-700 max-w-2xl mx-auto">
             A complete list of our efficient nationally tenticelized network of officially accredited Sub-Dealers is appended below to facilitate our valued clients.
           </p>
@@ -98,7 +98,7 @@ const SubDealers = () => {
         <div className="space-y-12">
           {dealers.map((group) => (
             <div key={group.city}>
-              <h3 className="text-2xl font-semibold text-[#003366] mb-4 border-b border-gray-200 pb-2">{group.city}</h3>
+              <h3 className="text-2xl font-semibold text-punjabac-brand mb-4 border-b border-gray-200 pb-2">{group.city}</h3>
               <div className="overflow-x-auto">
                 <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-sm">
                   <thead>
