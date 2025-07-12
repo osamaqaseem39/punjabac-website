@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { promises as fs } from "fs";
 import path from "path";
-import { MongoClient } from "mongodb";
+// Removed: import { MongoClient } from "mongodb";
 
 export async function POST(req: NextRequest) {
   try {
@@ -29,20 +29,9 @@ export async function POST(req: NextRequest) {
       imagePath = `/uploads/quotes/${fileName}`;
     }
 
-    // Save to MongoDB
-    const client = await MongoClient.connect(process.env.MONGODB_URI!);
-    const db = client.db();
-    const quotes = db.collection("quotes");
-    const doc = {
-      name,
-      email,
-      phone,
-      details,
-      image: imagePath,
-      createdAt: new Date(),
-    };
-    await quotes.insertOne(doc);
-    await client.close();
+    // Simulate saving the quote (no database)
+    // Optionally, you could write to a local file or just return success
+    // For static export, just return success
 
     return NextResponse.json({ success: true });
   } catch (err) {
