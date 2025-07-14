@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 
 interface Blog {
   _id: string;
@@ -11,10 +12,13 @@ interface Blog {
 }
 
 async function fetchBlog(slug: string): Promise<Blog | null> {
-  const res = await fetch(`https://punjabac-admin.vercel.app/api/blogs/${slug}`);
-  if (!res.ok) return null;
-  const data = await res.json();
-  return data.status === 'published' ? data : null;
+  try {
+    const res = await axios.get(`https://punjabac-admin.vercel.app/api/blogs/${slug}`);
+    const data = res.data;
+    return data.status === 'published' ? data : null;
+  } catch (error) {
+    return null;
+  }
 }
 
 function formatBlogContent(text: string) {
@@ -44,8 +48,21 @@ function formatBlogContent(text: string) {
   return text;
 }
 
+export async function generateStaticParams() {
+  try {
+    const res = await axios.get('https://punjabac-admin.vercel.app/api/blogs');
+    const blogs = res.data;
+    return (blogs || [])
+      .filter((blog: any) => blog.status === 'published')
+      .map((blog: any) => ({ slug: blog.slug }));
+  } catch (error) {
+    return [];
+  }
+}
+
 export default async function BlogDetailPage({ params }: { params: { slug: string } }) {
-  const blog = await fetchBlog(params.slug);
+  const { slug } = params;
+  const blog = await fetchBlog(slug);
 
   if (!blog) {
     return (

@@ -1,10 +1,39 @@
+'use client';
+
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { productsApi, servicesApi, Product, Service } from '../services/api';
 
 export default function Footer() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [services, setServices] = useState<Service[]>([]);
+  const [loadingProducts, setLoadingProducts] = useState(true);
+  const [loadingServices, setLoadingServices] = useState(true);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      setLoadingProducts(true);
+      const data = await productsApi.getAll();
+      setProducts(data.slice(0, 6));
+      setLoadingProducts(false);
+    };
+    fetchProducts();
+  }, []);
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      setLoadingServices(true);
+      const data = await servicesApi.getAll();
+      setServices(data.slice(0, 6));
+      setLoadingServices(false);
+    };
+    fetchServices();
+  }, []);
+
   return (
-    <footer className="bg-gray-900 text-white">
+    <footer className="bg-gray-900 text-white pt-12">
       <div className="max-w-7xl mx-auto py-6 px-4 flex flex-col">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-x-8 gap-y-8">
           {/* Company Info */}
           <div className="lg:col-span-1 min-w-[180px]">
             <div className="mb-6 flex flex-col items-start">
@@ -12,53 +41,59 @@ export default function Footer() {
               <div className="text-md text-gray-300 mb-1">Professional car air conditioning services with over 30 years of experience. Trusted by customers nationwide for quality and reliability.</div>
             </div>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              {/* Facebook */}
+              <a href="http://www.facebook.com/PunjabCarAc" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors" aria-label="Facebook">
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                  <path d="M22.675 0h-21.35C.595 0 0 .592 0 1.326v21.348C0 23.408.595 24 1.325 24h11.495v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.797.143v3.24l-1.918.001c-1.504 0-1.797.715-1.797 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116C23.406 24 24 23.408 24 22.674V1.326C24 .592 23.406 0 22.675 0" />
                 </svg>
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/>
-                </svg>
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              {/* Google Maps */}
+              <a href="https://maps.app.goo.gl/risMNUN4yaSqm4ug8" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors" aria-label="Google Maps">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <circle cx="12" cy="11" r="3" stroke="currentColor" strokeWidth="2" fill="none" />
                 </svg>
               </a>
             </div>
           </div>
 
-          {/* Services */}
+          {/* Services (dynamic) */}
           <div className="min-w-[180px]">
             <h3 className="text-lg font-semibold mb-6">Our Services</h3>
             <ul className="space-y-3">
-              <li>
-                <Link href="/services" className="text-gray-300 hover:text-white transition-colors">
-                  AC Repair & Maintenance
-                </Link>
-              </li>
-              <li>
-                <Link href="/services" className="text-gray-300 hover:text-white transition-colors">
-                  Refrigerant Recharge
-                </Link>
-              </li>
-              <li>
-                <Link href="/services" className="text-gray-300 hover:text-white transition-colors">
-                  Compressor Replacement
-                </Link>
-              </li>
-              <li>
-                <Link href="/services" className="text-gray-300 hover:text-white transition-colors">
-                  AC System Installation
-                </Link>
-              </li>
-              <li>
-                <Link href="/services" className="text-gray-300 hover:text-white transition-colors">
-                  Diagnostic Services
-                </Link>
-              </li>
+              {loadingServices ? (
+                <li className="text-gray-400">Loading...</li>
+              ) : services.length > 0 ? (
+                services.map(service => (
+                  <li key={service._id}>
+                    <Link href={`/services/${servicesApi.generateSlug(service.title, service._id)}`} className="text-gray-300 hover:text-white transition-colors">
+                      {service.title}
+                    </Link>
+                  </li>
+                ))
+              ) : (
+                <li className="text-gray-400">No services available</li>
+              )}
+            </ul>
+          </div>
+
+          {/* Products (dynamic) */}
+          <div className="min-w-[180px]">
+            <h3 className="text-lg font-semibold mb-6">Products</h3>
+            <ul className="space-y-3">
+              {loadingProducts ? (
+                <li className="text-gray-400">Loading...</li>
+              ) : products.length > 0 ? (
+                products.map(product => (
+                  <li key={product._id}>
+                    <Link href={`/products/${productsApi.generateSlug(product.title, product._id)}`} className="text-gray-300 hover:text-white transition-colors">
+                      {product.title}
+                    </Link>
+                  </li>
+                ))
+              ) : (
+                <li className="text-gray-400">No products available</li>
+              )}
             </ul>
           </div>
 
@@ -67,8 +102,23 @@ export default function Footer() {
             <h3 className="text-lg font-semibold mb-6">Quick Links</h3>
             <ul className="space-y-3">
               <li>
-                <Link href="/about" className="text-gray-300 hover:text-white transition-colors">
-                  About Us
+                <Link href="/our-brands" className="text-gray-300 hover:text-white transition-colors">
+                  Our Brands
+                </Link>
+              </li>
+              <li>
+                <Link href="/our-team" className="text-gray-300 hover:text-white transition-colors">
+                  Our Team
+                </Link>
+              </li>
+              <li>
+                <Link href="/company-profile" className="text-gray-300 hover:text-white transition-colors">
+                  Company Profile
+                </Link>
+              </li>
+              <li>
+                <Link href="/sub-dealers" className="text-gray-300 hover:text-white transition-colors">
+                  Sub Dealers
                 </Link>
               </li>
               <li>
@@ -77,17 +127,12 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/quote" className="text-gray-300 hover:text-white transition-colors">
+                <Link href="/get-quote" className="text-gray-300 hover:text-white transition-colors">
                   Get Quote
                 </Link>
               </li>
               <li>
-                <Link href="/faq" className="text-gray-300 hover:text-white transition-colors">
-                  FAQ
-                </Link>
-              </li>
-              <li>
-                <Link href="/blog" className="text-gray-300 hover:text-white transition-colors">
+                <Link href="/blogs" className="text-gray-300 hover:text-white transition-colors">
                   Blog
                 </Link>
               </li>
@@ -107,6 +152,20 @@ export default function Footer() {
                   <p className="text-gray-300">28, Mozang Road</p>
                   <p className="text-gray-300">Opp. Sir Ganga Ram Hospital</p>
                   <p className="text-gray-300">Lahore, Pakistan</p>
+                  {/* Google Maps Link */}
+                  <a
+                    href="https://maps.app.goo.gl/risMNUN4yaSqm4ug8"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-punjabac-brand-light hover:underline mt-1 text-sm"
+                    aria-label="View on Google Maps"
+                  >
+                    <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <circle cx="12" cy="11" r="3" stroke="currentColor" strokeWidth="2" fill="none" />
+                    </svg>
+                    View on Maps
+                  </a>
                 </div>
               </div>
               <div className="flex items-center space-x-3">

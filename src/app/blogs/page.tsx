@@ -1,3 +1,5 @@
+export const dynamic = "force-static";
+import axios from 'axios';
 import GetAQuoteForm from '../../components/GetAQuoteForm';
 import AutoCompanies from '../../components/AutoCompanies';
 import BlogCard from '../../components/BlogCard';
@@ -13,10 +15,13 @@ interface Blog {
 }
 
 async function fetchBlogs(): Promise<Blog[]> {
-  const res = await fetch('https://punjabac-admin.vercel.app/api/blogs', { cache: 'no-store' });
-  if (!res.ok) return [];
-  const data = await res.json();
-  return Array.isArray(data) ? data.filter((b) => b.status === 'published') : [];
+  try {
+    const res = await axios.get('https://punjabac-admin.vercel.app/api/blogs');
+    const data = res.data;
+    return Array.isArray(data) ? data.filter((b) => b.status === 'published') : [];
+  } catch (error) {
+    return [];
+  }
 }
 
 export default async function BlogsPage() {

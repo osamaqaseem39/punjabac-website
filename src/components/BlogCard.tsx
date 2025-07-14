@@ -34,7 +34,6 @@ const BlogCard: React.FC<BlogCardProps> = ({ blog }) => {
               src={blog.featuredImage}
               alt={blog.title}
               className="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500"
-              onError={handleImageError}
               width={400}
               height={224}
               loading="lazy"

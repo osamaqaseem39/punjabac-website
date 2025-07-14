@@ -107,7 +107,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           {product.title}
         </h3>
         <p className="text-gray-600 mb-6 line-clamp-3 leading-relaxed min-h-[4.5rem]">
-          {product.description}
+          {product.description.length > 150 ? product.description.slice(0, 150) + '...' : product.description}
         </p>
         
         {/* Product Meta */}

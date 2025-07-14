@@ -98,18 +98,21 @@ const OurClientsPage = () => {
     <main className="max-w-7xl mx-auto py-12 px-4">
       {/* Hero Section */}
       <div className="text-center mb-16">
-        <h1 className="text-4xl md:text-5xl font-bold mb-6">Our Valued Clients</h1>
-        <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-          One of the most experienced companies in the field of automobile air-conditioning in Pakistan, Punjab Car AC has earned a reputation for more than 30 years of solid, sound, dependable, and creditable expertise. We are proud to serve a diverse range of clients, from individual car owners to major automotive manufacturers and corporate fleets. Our commitment to excellence has earned us long-term partnerships.
+        <h1 className="text-4xl md:text-5xl font-bold mb-6">Brands Our Clients Drive</h1>
+        <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-4">
+          We proudly serve a diverse range of clients, including individual car owners, corporate fleets, and the owners of vehicles from leading automotive brands. The auto companies shown below represent the brands of vehicles our clients trust us to maintain and repair—not the companies themselves as direct clients.
+        </p>
+        <p className="text-lg text-gray-500 max-w-2xl mx-auto">
+          Our commitment to excellence has earned us long-term partnerships and a reputation for more than 30 years of dependable expertise in automobile air-conditioning across Pakistan.
         </p>
       </div>
 
       {/* Clients Grid */}
       <section className="mb-16">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">Our Corporate Clients</h2>
+          <h2 className="text-3xl font-bold mb-4">Brands Trusted by Our Clients</h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Trusted by leading automotive manufacturers and corporate clients across Pakistan.
+            The following brands represent the vehicles owned by our valued clients. We provide trusted AC services for their owners, dealerships, and service centers across Pakistan.
           </p>
         </div>
         
@@ -135,73 +138,22 @@ const OurClientsPage = () => {
         </div>
       </section>
 
-      {/* Success Stories */}
+      {/* Google Reviews */}
       <section className="mb-16">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">Success Stories</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Real examples of how we&apos;ve helped our clients achieve their goals and maintain their vehicles.
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-bold mb-4">Google Reviews</h2>
+          <p className="text-gray-600 max-w-2xl mx-auto mb-6">
+            See what our customers are saying about us on Google. We value your feedback and strive to provide the best service possible.
           </p>
-        </div>
-        
-        <div className="grid md:grid-cols-3 gap-8">
-          {successStories.map((story, index) => (
-            <div key={index} className="bg-gradient-to-br from-punjabac-brand to-punjabac-brand-light rounded-xl p-8 text-white">
-              <h3 className="text-xl font-bold mb-4">{story.title}</h3>
-              <p className="mb-6 opacity-90">{story.description}</p>
-              <div className="space-y-2">
-                {story.metrics.map((metric, metricIndex) => (
-                  <div key={metricIndex} className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-white rounded-full"></div>
-                    <span className="text-sm font-medium">{metric}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="mb-16">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">What Our Clients Say</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Hear from our satisfied clients about their experience with Punjab Car AC.
-          </p>
-        </div>
-        
-        <div className="grid md:grid-cols-2 gap-8">
-          {testimonials.map((testimonial, index) => (
-            <div key={index} className="bg-white rounded-xl shadow-lg p-8">
-              <div className="flex items-center mb-6">
-                <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mr-4">
-                  <img
-                    src={testimonial.image}
-                    alt={testimonial.name}
-                    width={60}
-                    height={60}
-                    className="rounded-full object-cover"
-                  />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold">{testimonial.name}</h3>
-                  <p className="text-gray-600 text-sm">{testimonial.position}</p>
-                  <p className="text-punjabac-brand text-sm font-medium">{testimonial.company}</p>
-                </div>
-              </div>
-              
-              <div className="flex mb-4">
-                {[...Array(testimonial.rating)].map((_, i) => (
-                  <svg key={i} className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                ))}
-              </div>
-              
-              <p className="text-gray-600 italic">&quot;{testimonial.text}&quot;</p>
-            </div>
-          ))}
+          <a
+            href="https://maps.app.goo.gl/risMNUN4yaSqm4ug8"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center bg-[#4285F4] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#357ae8] transition-colors text-lg shadow-md"
+          >
+            <svg className="w-6 h-6 mr-2" viewBox="0 0 48 48"><g><path fill="#4285F4" d="M43.611 20.083H42V20H24v8h11.303C34.962 32.042 30.153 35 24 35c-6.627 0-12-5.373-12-12s5.373-12 12-12c2.938 0 5.629 1.047 7.747 2.773l6.571-6.571C34.583 4.527 29.627 2 24 2 12.954 2 4 10.954 4 22s8.954 20 20 20c11.046 0 20-8.954 20-20 0-1.341-.138-2.651-.389-3.917z"/><path fill="#34A853" d="M6.306 14.691l6.571 4.819C14.655 16.104 19.001 13 24 13c2.938 0 5.629 1.047 7.747 2.773l6.571-6.571C34.583 4.527 29.627 2 24 2 16.318 2 9.656 6.741 6.306 14.691z"/><path fill="#FBBC05" d="M24 44c5.421 0 10.361-1.86 14.207-5.042l-6.586-5.411C29.627 35.953 26.94 37 24 37c-6.123 0-11.02-3.942-12.803-9.294l-6.553 5.049C9.623 41.259 16.318 44 24 44z"/><path fill="#EA4335" d="M43.611 20.083H42V20H24v8h11.303c-1.377 3.542-5.303 7-11.303 7-6.123 0-11.02-3.942-12.803-9.294l-6.553 5.049C9.623 41.259 16.318 44 24 44c5.421 0 10.361-1.86 14.207-5.042l-6.586-5.411C29.627 35.953 26.94 37 24 37c-6.123 0-11.02-3.942-12.803-9.294l-6.553 5.049C9.623 41.259 16.318 44 24 44z"/></g></svg>
+            Read Our Google Reviews
+          </a>
         </div>
       </section>
 
