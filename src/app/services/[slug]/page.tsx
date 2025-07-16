@@ -65,55 +65,25 @@ async function ServiceDetailPage({ params }: { params: Promise<{ slug: string }>
       </div>
 
       {/* Service Benefits */}
-      <div className="bg-gray-50 rounded-xl p-8 mb-8">
-        <h2 className="text-2xl font-bold mb-6">Service Benefits</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="flex items-start space-x-3">
-            <div className="w-6 h-6 bg-indigo-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-              <svg className="w-4 h-4 text-punjabac-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
-            <div>
-              <h3 className="font-semibold text-gray-900">Professional Expertise</h3>
-              <p className="text-gray-600 text-sm">Our certified technicians ensure quality workmanship.</p>
-            </div>
-          </div>
-          <div className="flex items-start space-x-3">
-            <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-              <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
-            <div>
-              <h3 className="font-semibold text-gray-900">Genuine Parts</h3>
-              <p className="text-gray-600 text-sm">We use only authentic parts from trusted brands.</p>
-            </div>
-          </div>
-          <div className="flex items-start space-x-3">
-            <div className="w-6 h-6 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-              <svg className="w-4 h-4 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
-            <div>
-              <h3 className="font-semibold text-gray-900">Quick Service</h3>
-              <p className="text-gray-600 text-sm">Fast turnaround time with same-day service available.</p>
-            </div>
-          </div>
-          <div className="flex items-start space-x-3">
-            <div className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-              <svg className="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
-            <div>
-              <h3 className="font-semibold text-gray-900">Warranty</h3>
-              <p className="text-gray-600 text-sm">All our services come with comprehensive warranty coverage.</p>
-            </div>
+      {Array.isArray(service.benefits) && service.benefits.length > 0 && (
+        <div className="bg-gray-50 rounded-xl p-8 mb-8">
+          <h2 className="text-2xl font-bold mb-6">Service Benefits</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {service.benefits.map((benefit: string, idx: number) => (
+              <div key={idx} className="flex items-start space-x-3">
+                <div className="w-6 h-6 bg-punjabac-brand/10 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                  <svg className="w-4 h-4 text-punjabac-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-gray-900">{benefit}</h3>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
-      </div>
+      )}
 
       {/* Contact CTA */}
       <div className="bg-punjabac-brand rounded-xl p-8 text-center text-white">

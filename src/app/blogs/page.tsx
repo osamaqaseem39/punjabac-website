@@ -3,6 +3,7 @@ import axios from 'axios';
 import GetAQuoteForm from '../../components/GetAQuoteForm';
 import AutoCompanies from '../../components/AutoCompanies';
 import BlogCard from '../../components/BlogCard';
+import ContactSection from '../../components/ContactSection';
 
 interface Blog {
   _id: string;
@@ -85,9 +86,8 @@ export default async function BlogsPage() {
         </div>
       </section>
       <AutoCompanies />
-      <div className="max-w-lg mx-auto w-full">
-        <GetAQuoteForm className="mt-20" layout="double" />
-      </div>
+      
+      <ContactSection />
     </main>
   );
 } 

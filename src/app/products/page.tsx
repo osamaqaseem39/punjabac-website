@@ -6,6 +6,7 @@ import AutoCompanies from '../../components/AutoCompanies';
 import ProductCard from '../../components/ProductCard';
 import GetAQuoteForm from '../../components/GetAQuoteForm';
 import Image from 'next/image';
+import ContactSection from '../../components/ContactSection';
 
 const ProductsPage = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -209,9 +210,8 @@ const ProductsPage = () => {
 
       {/* Auto Companies Section */}
       <AutoCompanies />
-      <div className="max-w-lg mx-auto w-full">
-        <GetAQuoteForm className="mt-20" layout="double" />
-      </div>
+      
+      <ContactSection />
     </main>
   );
 };
