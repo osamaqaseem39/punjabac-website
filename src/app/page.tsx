@@ -9,11 +9,12 @@ import ContactSection from '../components/ContactSection';
 export default function Home() {
   return (
     <>
-      <Hero /> 
+      <Hero />
+      <WhoWeAre />
       <HomeProducts />
       <Services />
     
-      <WhoWeAre />
+    
       <WhyChooseUs />
       <Brands />
       <ContactSection />

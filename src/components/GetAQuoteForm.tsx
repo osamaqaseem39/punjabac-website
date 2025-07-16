@@ -12,9 +12,9 @@ interface GetAQuoteFormProps {
 }
 
 const GetAQuoteForm: React.FC<GetAQuoteFormProps> = ({
-  title = "Get a Quote",
-  buttonText = "Submit Quote Request",
-  successMessage = "Your quote request has been submitted! We'll contact you soon.",
+  title = "Contact Us",
+  buttonText = "Submit Contact Request",
+  successMessage = "Your contact request has been submitted! We'll contact you soon.",
   className = "",
   layout = "double", // Default to double column
 }) => {

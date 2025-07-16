@@ -1,7 +1,7 @@
 import React from 'react';
 
 const WhoWeAre = () => (
-  <section className="py-16 bg-gray-50">
+  <section className="py-16 bg-white">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="w-full flex flex-col items-center gap-6">
         {/* Logo above heading */}
@@ -18,7 +18,7 @@ const WhoWeAre = () => (
         </div>
         {/* Heading and Text Content */}
         <div className="w-full max-w-3xl text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">Who We Are?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-punjabac-brand mb-3">Who We Are?</h2>
           <p className="text-gray-900 mb-2 font-semibold text-justify" style={{ fontFamily: 'Poppins, Arial, Helvetica, sans-serif', fontSize: '20px' }}>
             Punjab Car AC is one of Pakistan&apos;s most experienced automobile air conditioning companies, with over 30 years of solid, dependable expertise.
           </p>

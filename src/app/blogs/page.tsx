@@ -85,7 +85,9 @@ export default async function BlogsPage() {
         </div>
       </section>
       <AutoCompanies />
-      <GetAQuoteForm className="mt-20" layout="double" />
+      <div className="max-w-lg mx-auto w-full">
+        <GetAQuoteForm className="mt-20" layout="double" />
+      </div>
     </main>
   );
 } 

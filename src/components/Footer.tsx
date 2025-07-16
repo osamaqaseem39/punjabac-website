@@ -127,11 +127,6 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/get-quote" className="text-gray-300 hover:text-white transition-colors">
-                  Get Quote
-                </Link>
-              </li>
-              <li>
                 <Link href="/blogs" className="text-gray-300 hover:text-white transition-colors">
                   Blog
                 </Link>

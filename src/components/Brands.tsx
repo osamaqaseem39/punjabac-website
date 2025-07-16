@@ -8,9 +8,9 @@ const brands = [
 
 const Brands = () => {
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-16 bg-punjabac-brand/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-10">Our Brands</h2>
+        <h2 className="text-3xl md:text-4xl font-bold text-punjabac-brand text-center mb-10">Our Brands</h2>
         <div className="flex flex-row justify-center items-end gap-16 overflow-x-auto">
           {brands.map((brand) => (
             <div key={brand.name} className="flex flex-col items-center min-w-[120px]">

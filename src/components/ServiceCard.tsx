@@ -170,6 +170,15 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
           {service.description}
         </p>
 
+        {/* Benefits List */}
+        {service.benefits && service.benefits.length > 0 && (
+          <ul className="mb-6 pl-5 list-disc text-sm text-gray-700">
+            {service.benefits.map((benefit, idx) => (
+              <li key={idx}>{benefit}</li>
+            ))}
+          </ul>
+        )}
+
         {/* Service Highlights */}
         <div className="mb-6">
           <div className="flex flex-wrap gap-2">

@@ -38,6 +38,7 @@ export interface Service {
   featuredImage?: string;
   createdAt: string;
   updatedAt: string;
+  benefits?: string[];
 }
 
 export interface Blog {

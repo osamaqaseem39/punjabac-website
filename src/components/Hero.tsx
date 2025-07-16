@@ -5,17 +5,17 @@ import { Typewriter } from 'react-simple-typewriter';
 
 export default function Hero() {
   return (
-    <section className="relative bg-gray-50 overflow-hidden">
+    <section className="relative bg-punjabac-brand overflow-hidden">
       {/* Background Pattern */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+      <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Content */}
           <div className="text-center lg:text-left">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
               Over 30 Years of Trusted Auto AC 
-              <span className="text-punjabac-brand block min-h-[2.5rem]">
+              <span className="text-white block min-h-[2.5rem]">
                 <Typewriter
                   words={['Experience.', 'Innovation.', 'Perfection.', 'Excellence.']}
                   loop={0}
@@ -28,20 +28,20 @@ export default function Hero() {
               </span>
             </h1>
             
-            <p className="mt-6 text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+            <p className="mt-6 text-xl text-white/90 leading-relaxed max-w-2xl mx-auto lg:mx-0">
               We deliver innovative auto air-conditioning solutions for every vehicle, using only genuine parts and certified expert technicians to ensure unmatched value and reliability.
             </p>
             
             <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <Link 
                 href="/contact" 
-                className="bg-punjabac-brand text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-punjabac-brand-light transition-colors shadow-lg hover:shadow-xl"
+                className="bg-white text-punjabac-brand px-8 py-4 rounded-lg font-semibold text-lg hover:bg-punjabac-brand-light hover:text-white transition-colors shadow-lg hover:shadow-xl border-2 border-white"
               >
-                Get Free Quote
+                Contact Us
               </Link>
               <Link 
                 href="/products" 
-                className="border-2 border-punjabac-brand text-punjabac-brand px-8 py-4 rounded-lg font-semibold text-lg hover:bg-punjabac-brand hover:text-white transition-colors"
+                className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-punjabac-brand transition-colors"
               >
                 Our Products
               </Link>
@@ -50,28 +50,28 @@ export default function Hero() {
             {/* Trust Indicators */}
             <div className="mt-12 flex flex-wrap justify-center lg:justify-start gap-8">
               <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center">
-                  <svg className="w-5 h-5 text-punjabac-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <span className="text-gray-700 font-medium">Certified Technicians</span>
+                <span className="text-white font-medium">Certified Technicians</span>
               </div>
               <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                  <svg className="w-5 h-5 text-punjabac-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <span className="text-gray-700 font-medium">Same Day Service</span>
+                <span className="text-white font-medium">Same Day Service</span>
               </div>
               <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center">
-                  <svg className="w-5 h-5 text-punjabac-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <span className="text-gray-700 font-medium">Warranty Included</span>
+                <span className="text-white font-medium">Warranty Included</span>
               </div>
             </div>
           </div>
@@ -116,12 +116,12 @@ export default function Hero() {
             
             {/* Floating Elements */}
             <div className="absolute -top-4 -right-4 bg-yellow-100 rounded-full p-4 shadow-lg">
-              <svg className="w-8 h-8 text-punjabac-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
             <div className="absolute -bottom-4 -left-4 bg-green-100 rounded-full p-4 shadow-lg">
-              <svg className="w-8 h-8 text-punjabac-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>

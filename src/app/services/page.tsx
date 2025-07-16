@@ -142,7 +142,9 @@ const ServicesPage = () => {
           </div>
         </div>
       </section>
-      <GetAQuoteForm className="mt-20" layout="double" />
+      <div className="max-w-lg mx-auto w-full">
+        <GetAQuoteForm className="mt-20" layout="double" />
+      </div>
     </main>
   );
 };
