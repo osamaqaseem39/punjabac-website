@@ -135,7 +135,7 @@ export default function Header() {
                 className="block bg-punjabac-brand text-white px-6 py-2 rounded-lg font-medium hover:bg-punjabac-brand-light transition-colors text-center"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Contact Us
+                Message Us
               </Link>
             </div>
           </div>

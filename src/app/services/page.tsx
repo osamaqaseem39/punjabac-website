@@ -46,7 +46,7 @@ const ServicesPage = () => {
             Our Professional Services
           </h1>
           <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
-            Professional auto AC services with over 30 years of experience. We provide comprehensive solutions for all your automotive air conditioning needs.
+            Professional auto AC services with over years of experience. We provide comprehensive solutions for all your automotive air conditioning needs.
           </p>
           <div className="mt-8 flex justify-center">
             <div className="bg-white/20 backdrop-blur-sm rounded-full px-6 py-3">

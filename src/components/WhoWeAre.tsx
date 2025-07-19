@@ -20,7 +20,7 @@ const WhoWeAre = () => (
         <div className="w-full max-w-3xl text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-punjabac-brand mb-3">Who We Are?</h2>
           <p className="text-gray-900 mb-2 font-semibold text-justify" style={{ fontFamily: 'Poppins, Arial, Helvetica, sans-serif', fontSize: '20px' }}>
-            Punjab Car AC is one of Pakistan&apos;s most experienced automobile air conditioning companies, with over 30 years of solid, dependable expertise.
+            Punjab Car AC is one of Pakistan&apos;s most experienced automobile air conditioning companies, with over 45 years of solid, dependable expertise.
           </p>
           <p className="text-gray-600 mb-2 text-justify" style={{ fontFamily: 'Poppins, Arial, Helvetica, sans-serif', fontSize: '20px' }}>
             We specialize in installation, troubleshooting, and replacement of auto AC systems and parts, using only genuine brands like 

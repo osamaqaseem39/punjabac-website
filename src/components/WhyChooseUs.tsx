@@ -8,7 +8,7 @@ const WhyChooseUs = () => (
           Why Choose Punjab AC?
         </h2>
         <p className="text-xl text-white/90 max-w-3xl mx-auto">
-          One of the most experienced companies in the field of automobile air-conditioning in Pakistan, with over 30 years of solid, sound, dependable, and creditable expertise in the technology.
+          One of the most experienced companies in the field of automobile air-conditioning in Pakistan, with over 45 years of solid, sound, dependable, and creditable expertise in the technology.
         </p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -20,7 +20,7 @@ const WhyChooseUs = () => (
             </svg>
           </div>
           <h3 className="text-lg font-semibold text-white mb-2">Decades of Credible Experience</h3>
-          <p className="text-white/90">Over 30 years of solid, dependable expertise and a strong reputation in auto AC technology.</p>
+          <p className="text-white/90">Over 45 years of solid, dependable expertise and a strong reputation in auto AC technology.</p>
         </div>
         {/* Innovation & Genuine Parts */}
         <div className="text-center">

@@ -23,7 +23,7 @@ const CompanyProfilePage = () => (
         Our sales, marketing, and technical team of professionals are some of the brightest minds in the industry. We focus our energy daily on providing technical solutions to meet the challenges of our clients. Our dedicated professionals work through the entire gamut of air-conditioning techniques and technology, maintenance, and service. The Company ensures that clients are given rapid development and facilitation at our platform of improved competitiveness.
       </p>
       <p className="text-gray-700 mb-4">
-        As one of the most experienced companies in the field of automobile air-conditioning in Pakistan, we have earned a reputation for more than 30 years of solid, sound, dependable, and creditable expertise in this technology.
+        As one of the most experienced companies in the field of automobile air-conditioning in Pakistan, we have earned a reputation for more than 45 years of solid, sound, dependable, and creditable expertise in this technology.
       </p>
     </section>
 

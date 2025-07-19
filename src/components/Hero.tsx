@@ -14,7 +14,7 @@ export default function Hero() {
           {/* Content */}
           <div className="text-center lg:text-left">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
-              Over 30 Years of Trusted Auto AC 
+              Over 45 Years of Trusted Auto AC 
               <span className="text-white block min-h-[2.5rem]">
                 <Typewriter
                   words={['Experience.', 'Innovation.', 'Perfection.', 'Excellence.']}
@@ -32,20 +32,7 @@ export default function Hero() {
               We deliver innovative auto air-conditioning solutions for every vehicle, using only genuine parts and certified expert technicians to ensure unmatched value and reliability.
             </p>
             
-            <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Link 
-                href="/contact" 
-                className="bg-white text-punjabac-brand px-8 py-4 rounded-lg font-semibold text-lg hover:bg-punjabac-brand-light hover:text-white transition-colors shadow-lg hover:shadow-xl border-2 border-white"
-              >
-                Contact Us
-              </Link>
-              <Link 
-                href="/products" 
-                className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-punjabac-brand transition-colors"
-              >
-                Our Products
-              </Link>
-            </div>
+            
             
             {/* Trust Indicators */}
             <div className="mt-12 flex flex-wrap justify-center lg:justify-start gap-8">
@@ -63,16 +50,9 @@ export default function Hero() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <span className="text-white font-medium">Same Day Service</span>
+                <span className="text-white font-medium">Best AC Service</span>
               </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <span className="text-white font-medium">Warranty Included</span>
-              </div>
+              
             </div>
           </div>
           

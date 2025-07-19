@@ -48,7 +48,7 @@ const OurClientsPage = () => {
       company: 'City Transport Services',
       image: '/images/testimonials/client1.jpg',
       rating: 5,
-      text: 'Punjab Car AC has been our trusted partner for over 10 years. Their service quality and reliability are unmatched. They keep our entire fleet running smoothly.'
+      text: 'Punjab Car AC has been our trusted partner for over 45 years. Their service quality and reliability are unmatched. They keep our entire fleet running smoothly.'
     },
     {
       name: 'Fatima Ali',
@@ -103,7 +103,7 @@ const OurClientsPage = () => {
           We proudly serve a diverse range of clients, including individual car owners, corporate fleets, and the owners of vehicles from leading automotive brands. The auto companies shown below represent the brands of vehicles our clients trust us to maintain and repair—not the companies themselves as direct clients.
         </p>
         <p className="text-lg text-gray-500 max-w-2xl mx-auto">
-          Our commitment to excellence has earned us long-term partnerships and a reputation for more than 30 years of dependable expertise in automobile air-conditioning across Pakistan.
+          Our commitment to excellence has earned us long-term partnerships and a reputation for more than 0 years of dependable expertise in automobile air-conditioning across Pakistan.
         </p>
       </div>
 
