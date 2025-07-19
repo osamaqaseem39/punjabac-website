@@ -152,7 +152,7 @@ export default function Footer() {
                     href="https://maps.app.goo.gl/risMNUN4yaSqm4ug8"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center text-punjabac-brand-light hover:underline mt-1 text-sm"
+                    className="inline-flex items-center text-white hover:underline mt-1 text-sm"
                     aria-label="View on Google Maps"
                   >
                     <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
