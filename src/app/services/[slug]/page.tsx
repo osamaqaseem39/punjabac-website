@@ -69,7 +69,7 @@ async function ServiceDetailPage({ params }: { params: Promise<{ slug: string }>
         <div className="bg-gray-50 rounded-xl p-8 mb-8">
           <h2 className="text-2xl font-bold mb-6">Service Benefits</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {service.benefits.map((benefit: string, idx: number) => (
+            {service.benefits.map((benefit: any, idx: number) => (
               <div key={idx} className="flex items-start space-x-3">
                 <div className="w-6 h-6 bg-punjabac-brand/10 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
                   <svg className="w-4 h-4 text-punjabac-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -77,7 +77,7 @@ async function ServiceDetailPage({ params }: { params: Promise<{ slug: string }>
                   </svg>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900">{benefit}</h3>
+                  <h3 className="font-semibold text-gray-900">{benefit.text || benefit}</h3>
                 </div>
               </div>
             ))}

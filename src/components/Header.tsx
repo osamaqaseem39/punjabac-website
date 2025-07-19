@@ -20,13 +20,15 @@ export default function Header() {
     <header className="bg-white shadow-lg sticky top-0 z-50">
       <div className="max-w-7xl mx-auto flex items-center justify-between py-2 md:py-4 px-2 md:px-4">
         <div className="flex items-center">
-          <img
-            src="/images/logo.png"
-            alt="Punjab AC Logo"
-            width={scrolled ? 48 : 100}
-            height={20}
-            className={`transition-all duration-300 ${scrolled ? 'w-12' : 'w-24'} h-auto`}
-          />
+          <Link href="/">
+            <img
+              src="/images/logo.png"
+              alt="Punjab AC Logo"
+              width={scrolled ? 48 : 100}
+              height={20}
+              className={`transition-all duration-300 ${scrolled ? 'w-12' : 'w-24'} h-auto`}
+            />
+          </Link>
         </div>
         {/* Desktop Navigation */}
         <div className="hidden md:block">

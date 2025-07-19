@@ -129,7 +129,7 @@ const GetAQuoteForm: React.FC<GetAQuoteFormProps> = ({
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Project Details *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Message *</label>
           <textarea
             name="details"
             value={form.details}

@@ -26,7 +26,9 @@ export async function generateStaticParams() {
 
 async function fetchBlog(slug: string): Promise<Blog | null> {
   try {
-    const res = await axios.get(`https://punjabac-admin.vercel.app/api/blogs/${slug}`);
+    // Extract the ID from the slug (assumes ID is after the last dash)
+    const id = slug.split('-').pop();
+    const res = await axios.get(`https://punjabac-admin.vercel.app/api/blogs/${id}`);
     const data = res.data;
     return data.status === 'published' ? data : null;
   } catch (error) {
@@ -61,8 +63,8 @@ function formatBlogContent(text: string) {
   return text;
 }
 
-async function BlogDetailPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
+export default async function BlogDetailPage({ params }: { params: { slug: string } }) {
+  const { slug } = params;
   const blog = await fetchBlog(slug);
 
   if (!blog) {
@@ -103,6 +105,4 @@ async function BlogDetailPage({ params }: { params: Promise<{ slug: string }> })
       </section>
     </main>
   );
-}
-
-export default BlogDetailPage; 
+} 

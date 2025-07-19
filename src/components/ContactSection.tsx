@@ -49,7 +49,7 @@ const ContactSection = () => (
               </div>
               <div>
                 <h3 className="font-semibold text-gray-900">Address</h3>
-                <p className="text-gray-600">Punjab Car AC, 12 Montgomery Road, Lahore, Pakistan</p>
+                <p className="text-gray-600">28, Mozang Road, Opp. Sir Ganga Ram Hospital, Lahore, Pakistan</p>
                 <a href="https://maps.google.com/?q=Punjab+Car+AC,+12+Montgomery+Road,+Lahore" target="_blank" rel="noopener noreferrer" className="text-punjabac-brand underline text-sm">View on Google Maps</a>
               </div>
             </div>
