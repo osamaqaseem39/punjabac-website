@@ -22,6 +22,7 @@ const GetAQuoteForm: React.FC<GetAQuoteFormProps> = ({
     name: "",
     email: "",
     phone: "",
+    subject: "Feedback",
     details: "",
     image: null as File | null,
   });
@@ -29,7 +30,7 @@ const GetAQuoteForm: React.FC<GetAQuoteFormProps> = ({
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value, files } = e.target as { name: string; value: string; files?: FileList };
     if (name === "image" && files && files[0]) {
       setForm((prev) => ({ ...prev, image: files[0] }));
@@ -48,11 +49,12 @@ const GetAQuoteForm: React.FC<GetAQuoteFormProps> = ({
         name: form.name,
         email: form.email,
         phone: form.phone,
+        subject: form.subject,
         details: form.details,
       };
       await api.post("/quotes", payload);
       setSuccess(successMessage);
-      setForm({ name: "", email: "", phone: "", details: "", image: null });
+      setForm({ name: "", email: "", phone: "", subject: "Feedback", details: "", image: null });
     } catch (err: unknown) {
       if (
         err &&
@@ -127,6 +129,19 @@ const GetAQuoteForm: React.FC<GetAQuoteFormProps> = ({
             placeholder="Enter your phone number"
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-punjabac-brand focus:border-transparent text-left"
           />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Subject *</label>
+          <select
+            name="subject"
+            value={form.subject}
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-punjabac-brand focus:border-transparent text-left"
+          >
+            <option value="Feedback">Feedback</option>
+            <option value="Query">Query</option>
+          </select>
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">Message *</label>

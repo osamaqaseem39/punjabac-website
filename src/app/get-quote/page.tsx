@@ -56,7 +56,7 @@ export default function GetQuotePage() {
   return (
     <main className="min-h-screen bg-gray-50 py-16 px-4">
       <div className="max-w-xl mx-auto bg-white rounded-xl shadow-lg p-8">
-        <h1 className="text-3xl font-bold text-punjabac-brand mb-6 text-center">Contact Us</h1>
+        <h1 className="text-3xl font-bold text-punjabac-brand mb-6 text-center">Feedback/Query</h1>
         <form onSubmit={handleSubmit} className="space-y-6" encType="multipart/form-data">
           <div>
             <label className="block text-gray-700 font-medium mb-1">Name *</label>

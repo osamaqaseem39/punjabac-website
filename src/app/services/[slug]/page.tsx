@@ -96,7 +96,7 @@ async function ServiceDetailPage({ params }: { params: Promise<{ slug: string }>
             href="/contact" 
             className="bg-white text-punjabac-brand px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
           >
-            Get Free Quote
+            Get Free Advice
           </a>
           <a 
             href="tel:92-345-8428889" 

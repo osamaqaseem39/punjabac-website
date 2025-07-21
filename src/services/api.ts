@@ -29,6 +29,7 @@ export interface Product {
   gallery?: string[];
   createdAt: string;
   updatedAt: string;
+  benefits?: string[]; // <-- Added for dynamic product features
 }
 
 export interface Service {

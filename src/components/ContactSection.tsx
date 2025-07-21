@@ -10,7 +10,7 @@ const ContactSection = () => (
       </p>
     </div>
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-      <GetAQuoteForm title="Contact Us" layout="single" />
+      <GetAQuoteForm title="Feedback/Query" layout="single" />
       {/* Contact Information */}
       <div className="space-y-8">
         <div className="bg-white rounded-xl shadow-lg p-8">
@@ -24,7 +24,10 @@ const ContactSection = () => (
               </div>
               <div>
                 <h3 className="font-semibold text-gray-900">Phone</h3>
-                <p className="text-gray-600">92-345-8428889</p>
+                <div className="space-y-1">
+                  <p className="text-gray-600">Cell: 92-345-8428889</p>
+                  <p className="text-gray-600">Landline: 92-42-36305101<br/>92-42-36361648</p>
+                </div>
                 <p className="text-sm text-gray-500">Available 24/7 for emergency services</p>
               </div>
             </div>

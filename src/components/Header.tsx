@@ -46,7 +46,7 @@ export default function Header() {
             href="/contact" 
             className="bg-punjabac-brand text-white px-6 py-2 rounded-lg font-medium hover:bg-punjabac-brand-light transition-colors"
           >
-            Contact Us
+            Message Us
           </Link>
         </div>
         {/* Mobile menu button */}

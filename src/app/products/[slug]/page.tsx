@@ -112,56 +112,33 @@ async function ProductDetailPage({ params }: { params: Promise<{ slug: string }>
 
                 {/* Action Buttons */}
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <button className="flex-1 bg-punjabac-brand text-white py-3 px-6 rounded-lg font-semibold transition-colors flex items-center justify-center hover:bg-punjabac-brand-light focus:outline-none focus:ring-2 focus:ring-punjabac-brand">
+                  <Link href="/contact" className="flex-1 bg-punjabac-brand text-white py-3 px-6 rounded-lg font-semibold transition-colors flex items-center justify-center hover:bg-punjabac-brand-light focus:outline-none focus:ring-2 focus:ring-punjabac-brand">
                     <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                     </svg>
                     Contact for Information
-                  </button>
-                  <button className="px-6 py-3 border-2 border-punjabac-brand text-punjabac-brand rounded-lg font-semibold hover:bg-punjabac-brand/10 transition-colors flex items-center justify-center">
-                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                    </svg>
-                    Save
-                  </button>
+                  </Link>
+                  
                 </div>
 
                 {/* Product Features */}
                 <div className="mt-8 pt-8 border-t border-gray-200">
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">Product Features</h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="flex items-center">
-                      <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mr-3">
-                        <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                      </div>
-                      <span className="text-gray-700">Genuine Parts</span>
-                    </div>
-                    <div className="flex items-center">
-                      <div className="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center mr-3">
-                        <svg className="w-4 h-4 text-punjabac-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                      </div>
-                      <span className="text-gray-700">Quality Assured</span>
-                    </div>
-                    <div className="flex items-center">
-                      <div className="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center mr-3">
-                        <svg className="w-4 h-4 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                      </div>
-                      <span className="text-gray-700">Warranty Included</span>
-                    </div>
-                    <div className="flex items-center">
-                      <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center mr-3">
-                        <svg className="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                      </div>
-                      <span className="text-gray-700">Expert Support</span>
-                    </div>
+                    {product.benefits && product.benefits.length > 0 ? (
+                      product.benefits.map((benefit, idx) => (
+                        <div key={idx} className="flex items-center">
+                          <div className="w-8 h-8 bg-punjabac-brand/10 rounded-full flex items-center justify-center mr-3">
+                            <svg className="w-4 h-4 text-punjabac-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                            </svg>
+                          </div>
+                          <span className="text-gray-700">{benefit}</span>
+                        </div>
+                      ))
+                    ) : (
+                      <span className="text-gray-500">No features listed for this product.</span>
+                    )}
                   </div>
                 </div>
               </div>
