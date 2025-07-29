@@ -89,14 +89,14 @@ async function ServiceDetailPage({ params }: { params: Promise<{ slug: string }>
       <div className="bg-punjabac-brand rounded-xl p-8 text-center text-white">
         <h2 className="text-2xl font-bold mb-4">Ready to Get Started?</h2>
         <p className="text-punjabac-brand/80 mb-6">
-          Contact us today to schedule your service or get a free quote.
+          Contact us today to schedule your service.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a 
             href="/contact" 
             className="bg-white text-punjabac-brand px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
           >
-            Get Free Advice
+            Send Query/Feedback
           </a>
           <a 
             href="tel:92-345-8428889" 

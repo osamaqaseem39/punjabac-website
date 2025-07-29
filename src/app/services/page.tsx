@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { servicesApi, Service } from '../../services/api';
 import ServiceCard from '../../components/ServiceCard';
-import GetAQuoteForm from '../../components/GetAQuoteForm';
+import GetAQueryForm from '../../components/GetAQueryForm';
 import Image from 'next/image';
 import ContactSection from '../../components/ContactSection';
 

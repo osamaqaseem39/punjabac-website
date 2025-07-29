@@ -12,6 +12,7 @@ interface ProductCardProps {
   showGalleryCount?: boolean;
   showCategoryBadge?: boolean;
   showHoverEffects?: boolean;
+  onClick?: () => void;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
@@ -20,7 +21,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
   showDate = true,
   showGalleryCount = true,
   showCategoryBadge = true,
-  showHoverEffects = true
+  showHoverEffects = true,
+  onClick
 }) => {
   const slug = `${product.title.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-')}-${product._id}`;
   
@@ -45,8 +47,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
     ? "w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500"
     : "w-full h-48 object-cover";
 
+  const handleCardClick = () => {
+    if (onClick) {
+      onClick();
+    }
+  };
+
   return (
-    <div className={baseClasses}>
+    <div className={baseClasses} onClick={handleCardClick} style={{ cursor: onClick ? 'pointer' : 'default' }}>
       {/* Product Image */}
       <div className="relative overflow-hidden">
         {imageUrl ? (
@@ -79,23 +87,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
           </div>
         )}
 
-        {/* Quick action button for homepage variant */}
-        {variant === 'homepage' && showHoverEffects && (
-          <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300">
-            <Link
-              href={`/products/${slug}`}
-              className="bg-white/90 backdrop-blur-sm text-punjabac-brand px-4 py-2 rounded-lg font-semibold hover:bg-white transition-colors shadow-lg"
-            >
-              View Details
-            </Link>
-          </div>
-        )}
-
         {/* Category Badge */}
-        {showCategoryBadge && (
+        {showCategoryBadge && product.category && (
           <div className="absolute top-4 left-4">
             <span className="bg-punjabac-brand text-white px-3 py-1 rounded-full text-xs font-medium">
-              Auto AC
+              {typeof product.category === 'string' ? product.category : product.category.name}
             </span>
           </div>
         )}
@@ -129,18 +125,19 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
         {/* Action Buttons */}
         <div className="flex gap-3">
-          <Link
-            href={`/products/${slug}`}
-            className="flex-1 bg-punjabac-brand text-white py-3 px-4 rounded-lg font-semibold hover:bg-punjabac-brand-light transition-colors text-center"
-          >
-            View Details
-          </Link>
-          {variant === 'homepage' && (
-            <button className="p-3 text-gray-400 hover:text-punjabac-brand transition-colors border border-gray-200 rounded-lg hover:border-punjabac-brand">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-              </svg>
+          {onClick ? (
+            <button
+              className="flex-1 bg-punjabac-brand text-white py-3 px-4 rounded-lg font-semibold hover:bg-punjabac-brand-light transition-colors text-center"
+            >
+              View Details
             </button>
+          ) : (
+            <Link
+              href={`/products/${slug}`}
+              className="flex-1 bg-punjabac-brand text-white py-3 px-4 rounded-lg font-semibold hover:bg-punjabac-brand-light transition-colors text-center"
+            >
+              View Details
+            </Link>
           )}
         </div>
       </div>

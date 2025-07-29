@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 
-export default function GetQuotePage() {
+export default function GetQueryPage() {
   const [form, setForm] = useState<{ name: string; email: string; phone: string; details: string; image: File | null }>({
     name: "",
     email: "",
@@ -35,7 +35,7 @@ export default function GetQuotePage() {
       formData.append("details", form.details);
       if (form.image) formData.append("image", form.image);
 
-      const res = await fetch("/api/quote", {
+      const res = await fetch("/api/query", {
         method: "POST",
         body: formData,
       });

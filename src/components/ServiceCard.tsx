@@ -120,14 +120,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             
             {showHoverEffects && variant === 'homepage' && (
-              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-                <Link
-                  href={slug}
-                  className="bg-white text-punjabac-brand px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform translate-y-4 group-hover:translate-y-0 shadow-xl hover:shadow-2xl hover:bg-punjabac-brand hover:text-white"
-                >
-                  View Details
-                </Link>
-              </div>
+              null
             )}
           </div>
         ) : (
@@ -169,6 +162,14 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
         <p className="text-gray-600 mb-6 leading-relaxed line-clamp-3 flex-1 text-sm">
           {service.description}
         </p>
+        {/* Tags */}
+        {service.tags && service.tags.length > 0 && (
+          <div className="mb-4 flex flex-wrap gap-2">
+            {service.tags.map((tag: string, idx: number) => (
+              <span key={idx} className="inline-block bg-punjabac-brand/10 text-punjabac-brand px-3 py-1 rounded-full text-xs font-medium">{tag}</span>
+            ))}
+          </div>
+        )}
 
         {/* Benefits List */}
         {service.benefits && service.benefits.length > 0 && (

@@ -1,38 +1,94 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { productsApi, Product } from '../../services/api';
+import React, { useEffect, useState, Suspense } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
+import { productsApi, Product, brandsApi, Brand, companiesApi, AutoCompany, categoriesApi, Category } from '../../services/api';
 import AutoCompanies from '../../components/AutoCompanies';
 import ProductCard from '../../components/ProductCard';
-import GetAQuoteForm from '../../components/GetAQuoteForm';
+import GetAQueryForm from '../../components/GetAQueryForm';
 import Image from 'next/image';
 import ContactSection from '../../components/ContactSection';
 
-const ProductsPage = () => {
+// Loading component for Suspense fallback
+const ProductsLoading = () => (
+  <div className="min-h-screen bg-gradient-to-br from-gray-50 to-punjabac-brand/5">
+    <div className="max-w-7xl mx-auto py-12 px-4">
+      <div className="text-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-punjabac-brand mx-auto mb-4"></div>
+        <p className="text-gray-600">Loading products...</p>
+      </div>
+    </div>
+  </div>
+);
+
+// Main products component
+const ProductsPageContent = () => {
+  const searchParams = useSearchParams();
+  const router = useRouter();
   const [products, setProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedBrand, setSelectedBrand] = useState('all');
+  const [selectedAutoCompany, setSelectedAutoCompany] = useState('all');
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [brands, setBrands] = useState<Brand[]>([]);
+  const [autoCompanies, setAutoCompanies] = useState<AutoCompany[]>([]);
+
+  // Get URL parameters for initial filtering
+  const categoryFilter = searchParams.get('category');
+  const brandFilter = searchParams.get('brand');
+  const autoCompanyFilter = searchParams.get('autoCompany');
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchData = async () => {
       try {
-        const data = await productsApi.getAll();
-        console.log('Fetched products:', data); // Debug log
-        setProducts(data);
-        setFilteredProducts(data);
+        const [productsData, categoriesData, brandsData, autoCompaniesData] = await Promise.all([
+          productsApi.getAll(),
+          categoriesApi.getAll(),
+          brandsApi.getAll(),
+          companiesApi.getAll()
+        ]);
+        
+        console.log('Fetched data:', {
+          products: productsData.length,
+          categories: categoriesData.length,
+          brands: brandsData.length,
+          autoCompanies: autoCompaniesData.length
+        });
+        
+        setProducts(productsData);
+        setCategories(categoriesData);
+        setBrands(brandsData);
+        setAutoCompanies(autoCompaniesData);
+        
+        // Set initial filters from URL parameters
+        if (categoryFilter) {
+          console.log('Setting initial category filter:', categoryFilter);
+          setSelectedCategory(categoryFilter);
+        }
+        if (brandFilter) {
+          console.log('Setting initial brand filter:', brandFilter);
+          setSelectedBrand(brandFilter);
+        }
+        if (autoCompanyFilter) {
+          console.log('Setting initial auto company filter:', autoCompanyFilter);
+          setSelectedAutoCompany(autoCompanyFilter);
+        }
+        
+        setFilteredProducts(productsData);
       } catch (error) {
-        console.error('Error fetching products:', error);
+        console.error('Error fetching data:', error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchProducts();
-  }, []);
+    fetchData();
+  }, [categoryFilter, brandFilter, autoCompanyFilter]);
 
-  // Filter products based on search term and category
+  // Filter products based on search term and filters
   useEffect(() => {
     let filtered = products;
 
@@ -46,21 +102,80 @@ const ProductsPage = () => {
 
     // Filter by category
     if (selectedCategory !== 'all') {
-      filtered = filtered.filter(product =>
-        product.title.toLowerCase().includes(selectedCategory.toLowerCase())
+      filtered = filtered.filter(product => {
+        const productCategory = typeof product.category === 'string' ? product.category : product.category?._id;
+        return productCategory === selectedCategory;
+      });
+    }
+
+    // Filter by brand
+    if (selectedBrand !== 'all') {
+      filtered = filtered.filter(product => {
+        const productBrand = typeof product.brand === 'string' ? product.brand : product.brand?._id;
+        return productBrand === selectedBrand;
+      });
+    }
+
+    // Filter by auto company
+    if (selectedAutoCompany !== 'all') {
+      filtered = filtered.filter(product => 
+        product.autoCompanies && product.autoCompanies.includes(selectedAutoCompany)
       );
     }
 
     setFilteredProducts(filtered);
-  }, [products, searchTerm, selectedCategory]);
+  }, [products, searchTerm, selectedCategory, selectedBrand, selectedAutoCompany]);
 
-  const categories = [
-    { id: 'all', name: 'All Products', count: products.length },
-    { id: 'compressor', name: 'Compressors', count: products.filter(p => p.title.toLowerCase().includes('compressor')).length },
-    { id: 'condenser', name: 'Condensers', count: products.filter(p => p.title.toLowerCase().includes('condenser')).length },
-    { id: 'evaporator', name: 'Evaporators', count: products.filter(p => p.title.toLowerCase().includes('evaporator')).length },
-    { id: 'valve', name: 'Valves', count: products.filter(p => p.title.toLowerCase().includes('valve')).length },
-  ];
+  const handleFilterChange = (type: 'category' | 'brand' | 'autoCompany', value: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    
+    if (value === 'all') {
+      params.delete(type);
+    } else {
+      params.set(type, value);
+    }
+    
+    // Clear other filters when one is selected
+    if (type === 'category') {
+      params.delete('brand');
+      params.delete('autoCompany');
+      setSelectedBrand('all');
+      setSelectedAutoCompany('all');
+    } else if (type === 'brand') {
+      params.delete('category');
+      params.delete('autoCompany');
+      setSelectedCategory('all');
+      setSelectedAutoCompany('all');
+    } else if (type === 'autoCompany') {
+      params.delete('category');
+      params.delete('brand');
+      setSelectedCategory('all');
+      setSelectedBrand('all');
+    }
+    
+    router.push(`/products?${params.toString()}`);
+  };
+
+  const clearAllFilters = () => {
+    setSearchTerm('');
+    setSelectedCategory('all');
+    setSelectedBrand('all');
+    setSelectedAutoCompany('all');
+    router.push('/products');
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-punjabac-brand/5">
+        <div className="max-w-7xl mx-auto py-12 px-4">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-punjabac-brand mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading products...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-gray-50 to-punjabac-brand/5">
@@ -96,46 +211,120 @@ const ProductsPage = () => {
       {/* Search and Filter Section */}
       <section className="py-8 bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row gap-6 items-center justify-between">
+          <div className="flex flex-col gap-6">
             {/* Search Bar */}
-            <div className="relative flex-1 max-w-md">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
+            <div className="flex justify-center">
+              <div className="relative max-w-md w-full">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </div>
+                <input
+                  type="text"
+                  placeholder="Search products..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="search-input block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-punjabac-brand focus:border-transparent transition-all duration-200"
+                />
               </div>
-              <input
-                type="text"
-                placeholder="Search products..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="search-input block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-punjabac-brand focus:border-transparent transition-all duration-200"
-              />
             </div>
 
-            {/* Category Filters */}
-            <div className="flex flex-wrap gap-2">
-              {categories.map((category) => (
+            {/* Filter Buttons */}
+            <div className="flex flex-wrap gap-4 justify-center">
+              {/* Category Filters */}
+              <div className="flex flex-wrap gap-2">
                 <button
-                  key={category.id}
-                  onClick={() => setSelectedCategory(category.id)}
-                  className={`category-filter px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
-                    selectedCategory === category.id
+                  onClick={() => handleFilterChange('category', 'all')}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                    selectedCategory === 'all'
                       ? 'bg-punjabac-brand text-white shadow-lg scale-105'
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   }`}
                 >
-                  {category.name}
-                  <span className={`ml-2 px-2 py-0.5 rounded-full text-xs ${
-                    selectedCategory === category.id
-                      ? 'bg-white/20'
-                      : 'bg-punjabac-brand/10 text-punjabac-brand'
-                  }`}>
-                    {category.count}
-                  </span>
+                  All Categories
                 </button>
-              ))}
+                {categories.map((category) => (
+                  <button
+                    key={category._id}
+                    onClick={() => handleFilterChange('category', category._id)}
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                      selectedCategory === category._id
+                        ? 'bg-punjabac-brand text-white shadow-lg scale-105'
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    }`}
+                  >
+                    {category.name}
+                  </button>
+                ))}
+              </div>
+
+              {/* Brand Filters */}
+              <div className="flex flex-wrap gap-2">
+                <button
+                  onClick={() => handleFilterChange('brand', 'all')}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                    selectedBrand === 'all'
+                      ? 'bg-punjabac-brand text-white shadow-lg scale-105'
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }`}
+                >
+                  All Brands
+                </button>
+                {brands.map((brand) => (
+                  <button
+                    key={brand._id}
+                    onClick={() => handleFilterChange('brand', brand._id)}
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                      selectedBrand === brand._id
+                        ? 'bg-punjabac-brand text-white shadow-lg scale-105'
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    }`}
+                  >
+                    {brand.name}
+                  </button>
+                ))}
+              </div>
+
+              {/* Auto Company Filters */}
+              <div className="flex flex-wrap gap-2">
+                <button
+                  onClick={() => handleFilterChange('autoCompany', 'all')}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                    selectedAutoCompany === 'all'
+                      ? 'bg-punjabac-brand text-white shadow-lg scale-105'
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }`}
+                >
+                  All Auto Companies
+                </button>
+                {autoCompanies.map((company) => (
+                  <button
+                    key={company._id}
+                    onClick={() => handleFilterChange('autoCompany', company._id)}
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                      selectedAutoCompany === company._id
+                        ? 'bg-punjabac-brand text-white shadow-lg scale-105'
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    }`}
+                  >
+                    {company.name}
+                  </button>
+                ))}
+              </div>
             </div>
+
+            {/* Clear Filters Button */}
+            {(searchTerm || selectedCategory !== 'all' || selectedBrand !== 'all' || selectedAutoCompany !== 'all') && (
+              <div className="flex justify-center">
+                <button
+                  onClick={clearAllFilters}
+                  className="px-6 py-2 text-punjabac-brand font-medium hover:text-punjabac-brand-light transition-colors border border-punjabac-brand rounded-lg hover:bg-punjabac-brand/5"
+                >
+                  Clear All Filters
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -186,17 +375,14 @@ const ProductsPage = () => {
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">No products found</h3>
                 <p className="text-gray-600 mb-6">
-                  {searchTerm || selectedCategory !== 'all' 
+                  {searchTerm || selectedCategory !== 'all' || selectedBrand !== 'all' || selectedAutoCompany !== 'all'
                     ? 'Try adjusting your search or filter criteria.'
                     : 'No products are currently available. Please check back later.'
                   }
                 </p>
-                {(searchTerm || selectedCategory !== 'all') && (
+                {(searchTerm || selectedCategory !== 'all' || selectedBrand !== 'all' || selectedAutoCompany !== 'all') && (
                   <button
-                    onClick={() => {
-                      setSearchTerm('');
-                      setSelectedCategory('all');
-                    }}
+                    onClick={clearAllFilters}
                     className="bg-punjabac-brand text-white px-6 py-3 rounded-lg font-semibold hover:bg-punjabac-brand-light transition-colors"
                   >
                     Clear Filters
@@ -213,6 +399,15 @@ const ProductsPage = () => {
       
       <ContactSection />
     </main>
+  );
+};
+
+// Main page component with Suspense boundary
+const ProductsPage = () => {
+  return (
+    <Suspense fallback={<ProductsLoading />}>
+      <ProductsPageContent />
+    </Suspense>
   );
 };
 

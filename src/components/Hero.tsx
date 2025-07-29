@@ -50,7 +50,7 @@ export default function Hero() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <span className="text-white font-medium">Best AC Service</span>
+                <span className="text-white font-medium">Premium AC Service</span>
               </div>
               
             </div>

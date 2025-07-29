@@ -2,21 +2,22 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { productsApi, Product } from '../services/api';
+import { productsApi, Product, categoriesApi, Category } from '../services/api';
 import ProductCard from './ProductCard';
 
 const HomeProducts = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const data = await productsApi.getAll();
-        console.log('Fetched products:', data); // Debug log
-        // Show only first 6 products on homepage
-        setProducts(data.slice(0, 6));
+        // Only show featured products
+        const featured = data.filter((p: Product) => p.featured);
+        setProducts(featured.slice(0, 6));
       } catch (error) {
         console.error('Error fetching products:', error);
       } finally {
@@ -24,24 +25,34 @@ const HomeProducts = () => {
       }
     };
 
+    const fetchCategories = async () => {
+      try {
+        const cats = await categoriesApi.getAll();
+        setCategories(cats);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+
     fetchProducts();
+    fetchCategories();
   }, []);
 
-  // Filter products by category
-  const filteredProducts = selectedCategory === 'all' 
-    ? products 
-    : products.filter(product => 
-        product.title.toLowerCase().includes(selectedCategory.toLowerCase())
-      );
+  // Filter products by category - handle both string and object category types
+  const filteredProducts = selectedCategory === 'all'
+    ? products
+    : products.filter(product => {
+        const productCategory = typeof product.category === 'string' ? product.category : product.category?._id;
+        return productCategory === selectedCategory;
+      });
 
-  const categories = [
-    { id: 'all', name: 'All Products', count: products.length },
-    { id: 'compressor', name: 'Compressors', count: products.filter(p => p.title.toLowerCase().includes('compressor')).length },
-    { id: 'condenser', name: 'Condensers', count: products.filter(p => p.title.toLowerCase().includes('condenser')).length },
-    { id: 'evaporator', name: 'Evaporators', count: products.filter(p => p.title.toLowerCase().includes('evaporator')).length },
-  ];
-
-
+  // Generate the products page URL with current filter
+  const getProductsPageUrl = () => {
+    if (selectedCategory === 'all') {
+      return '/products';
+    }
+    return `/products?category=${selectedCategory}`;
+  };
 
   return (
     <section className="py-20 bg-punjabac-brand/10">
@@ -65,24 +76,28 @@ const HomeProducts = () => {
 
         {/* Category Filters */}
         <div className="flex flex-wrap justify-center gap-3 mb-12">
+          <button
+            key="all"
+            onClick={() => setSelectedCategory('all')}
+            className={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 ${
+              selectedCategory === 'all'
+                ? 'bg-punjabac-brand text-white shadow-lg scale-105'
+                : 'bg-white text-gray-700 hover:bg-gray-100 shadow-md hover:shadow-lg'
+            }`}
+          >
+            Top Sellers
+          </button>
           {categories.map((category) => (
             <button
-              key={category.id}
-              onClick={() => setSelectedCategory(category.id)}
+              key={category._id}
+              onClick={() => setSelectedCategory(category._id)}
               className={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 ${
-                selectedCategory === category.id
+                selectedCategory === category._id
                   ? 'bg-punjabac-brand text-white shadow-lg scale-105'
                   : 'bg-white text-gray-700 hover:bg-gray-100 shadow-md hover:shadow-lg'
               }`}
             >
               {category.name}
-              <span className={`ml-2 px-2 py-1 rounded-full text-xs ${
-                selectedCategory === category.id
-                  ? 'bg-white/20'
-                  : 'bg-punjabac-brand/10 text-punjabac-brand'
-              }`}>
-                {category.count}
-              </span>
             </button>
           ))}
         </div>
@@ -115,7 +130,7 @@ const HomeProducts = () => {
             {/* CTA Section */}
             <div className="text-center">
               <Link
-                href="/products"
+                href={getProductsPageUrl()}
                 className="inline-flex items-center bg-punjabac-brand text-white px-8 py-4 rounded-lg font-semibold hover:bg-punjabac-brand-light transition-colors"
               >
                 View All Products

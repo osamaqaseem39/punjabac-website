@@ -37,7 +37,7 @@ export default function Footer() {
           {/* Company Info */}
           <div className="lg:col-span-1 min-w-[180px]">
             <div className="mb-6 flex flex-col items-start">
-              <img src="/images/logo.png" alt="Punjab AC Logo" width={200} height={80} className="h-20 w-auto mb-2" />
+              <img src="/images/logo-dark.png" alt="Punjab AC Logo" width={200} height={80} className="h-20 w-auto mb-2" />
               <div className="text-md text-gray-300 mb-1">Professional car air conditioning services with over 45 years of experience. Trusted by customers nationwide for quality and reliability.</div>
             </div>
             <div className="flex space-x-4">
@@ -48,12 +48,7 @@ export default function Footer() {
                 </svg>
               </a>
               {/* Google Maps */}
-              <a href="https://maps.app.goo.gl/risMNUN4yaSqm4ug8" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors" aria-label="Google Maps">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  <circle cx="12" cy="11" r="3" stroke="currentColor" strokeWidth="2" fill="none" />
-                </svg>
-              </a>
+              
             </div>
           </div>
 
@@ -148,26 +143,14 @@ export default function Footer() {
                   <p className="text-gray-300">Opp. Sir Ganga Ram Hospital</p>
                   <p className="text-gray-300">Lahore, Pakistan</p>
                   {/* Google Maps Link */}
-                  <a
-                    href="https://maps.app.goo.gl/risMNUN4yaSqm4ug8"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center text-white hover:underline mt-1 text-sm"
-                    aria-label="View on Google Maps"
-                  >
-                    <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <circle cx="12" cy="11" r="3" stroke="currentColor" strokeWidth="2" fill="none" />
-                    </svg>
-                    View on Maps
-                  </a>
+                
                 </div>
               </div>
               <div className="flex items-center space-x-3">
                 <svg className="w-5 h-5 text-punjabac-brand-light flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
-                <span className="text-gray-300">Landline: 92-42-36305101, 92-42-36361648</span>
+                <span className="text-gray-300">Landline:<br/> +92-42-36305101,<br/>+92-42-36361648</span>
               </div>
               <div className="flex items-center space-x-3">
                 <svg className="w-5 h-5 text-punjabac-brand-light flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">

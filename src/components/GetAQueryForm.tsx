@@ -1,9 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { api } from "@/services/api";
 
-interface GetAQuoteFormProps {
+interface GetAQueryFormProps {
   title?: string;
   buttonText?: string;
   successMessage?: string;
@@ -11,10 +10,10 @@ interface GetAQuoteFormProps {
   layout?: "single" | "double"; // New prop for layout control
 }
 
-const GetAQuoteForm: React.FC<GetAQuoteFormProps> = ({
+const GetAQueryForm: React.FC<GetAQueryFormProps> = ({
   title = "",
-  buttonText = "Submit Feedback/Query",
-  successMessage = "Your Feedback/Query has been submitted! We'll contact you soon.",
+  buttonText = "Send Message",
+  successMessage = "Your message has been sent successfully! We'll contact you soon.",
   className = "",
   layout = "double", // Default to double column
 }) => {
@@ -22,7 +21,7 @@ const GetAQuoteForm: React.FC<GetAQuoteFormProps> = ({
     name: "",
     email: "",
     phone: "",
-    subject: "Feedback",
+    subject: "query",
     details: "",
     image: null as File | null,
   });
@@ -44,18 +43,32 @@ const GetAQuoteForm: React.FC<GetAQuoteFormProps> = ({
     setLoading(true);
     setSuccess("");
     setError("");
+
     try {
-      const payload = {
+      // Send email directly to info@punjabac.com
+      const emailPayload = {
         name: form.name,
         email: form.email,
         phone: form.phone,
         subject: form.subject,
         details: form.details,
       };
-      await api.post("/quotes", payload);
+
+      const emailResponse = await fetch("https://punjabac-admin.vercel.app/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(emailPayload),
+      });
+
+      if (!emailResponse.ok) {
+        throw new Error('Failed to send email');
+      }
+
       setSuccess(successMessage);
-      setForm({ name: "", email: "", phone: "", subject: "Feedback", details: "", image: null });
+      setForm({ name: "", email: "", phone: "", subject: "query", details: "", image: null });
     } catch (err: unknown) {
+      console.error('Form submission error:', err);
+      
       if (
         err &&
         typeof err === 'object' &&
@@ -69,8 +82,10 @@ const GetAQuoteForm: React.FC<GetAQuoteFormProps> = ({
         typeof err.response.data.error === 'string'
       ) {
         setError(err.response.data.error);
+      } else if (err instanceof Error) {
+        setError(err.message);
       } else {
-        setError('An unexpected error occurred.');
+        setError('An unexpected error occurred. Please try again.');
       }
     } finally {
       setLoading(false);
@@ -139,35 +154,73 @@ const GetAQuoteForm: React.FC<GetAQuoteFormProps> = ({
             required
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-punjabac-brand focus:border-transparent text-left"
           >
-            <option value="Feedback">Feedback</option>
-            <option value="Query">Query</option>
+            <option value="query">General Query</option>
+            <option value="feedback">Feedback</option>
           </select>
         </div>
-        <div>
+        <div className={layout === "single" ? "" : "md:col-span-2"}>
           <label className="block text-sm font-medium text-gray-700 mb-2">Message *</label>
           <textarea
             name="details"
             value={form.details}
             onChange={handleChange}
             required
-            rows={3}
-            placeholder="Describe your project requirements, specifications, or any specific needs..."
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-punjabac-brand focus:border-transparent text-left h-[90px] min-h-[90px] resize-y"
+            rows={4}
+            placeholder="Please describe your message, inquiry, or any specific needs. We'll get back to you as soon as possible..."
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-punjabac-brand focus:border-transparent text-left min-h-[120px] resize-y"
           />
         </div>
       </div>
-      {/* Removed image upload field */}
-      {success && <div className="text-green-600 font-medium text-center mt-2">{success}</div>}
-      {error && <div className="text-red-600 font-medium text-center mt-2">{error}</div>}
+      
+      {success && (
+        <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+          <div className="flex">
+            <div className="flex-shrink-0">
+              <svg className="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <p className="text-sm text-green-800">{success}</p>
+            </div>
+          </div>
+        </div>
+      )}
+      
+      {error && (
+        <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+          <div className="flex">
+            <div className="flex-shrink-0">
+              <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <p className="text-sm text-red-800">{error}</p>
+            </div>
+          </div>
+        </div>
+      )}
+      
       <button
         type="submit"
         disabled={loading}
-        className="w-full bg-punjabac-brand text-white py-3 px-6 rounded-lg font-semibold hover:bg-punjabac-brand-light transition-colors text-left mt-2"
+        className="w-full bg-punjabac-brand text-white py-3 px-6 rounded-lg font-semibold hover:bg-punjabac-brand-light transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        {loading ? "Submitting..." : buttonText}
+        {loading ? (
+          <div className="flex items-center justify-center">
+            <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            Sending...
+          </div>
+        ) : (
+          buttonText
+        )}
       </button>
     </form>
   );
 };
 
-export default GetAQuoteForm; 
+export default GetAQueryForm; 

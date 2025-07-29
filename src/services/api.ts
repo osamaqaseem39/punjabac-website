@@ -9,7 +9,7 @@ export const api = axios.create({
 });
 
 // Utility function to get full image URL
-export const getImageUrl = (imagePath: string | undefined, type: 'products' | 'services' = 'products'): string | null => {
+export const getImageUrl = (imagePath: string | undefined, type: 'products' | 'services' | 'brands' = 'products'): string | null => {
   if (!imagePath) return null;
   
   if (imagePath.startsWith('http')) {
@@ -21,6 +21,14 @@ export const getImageUrl = (imagePath: string | undefined, type: 'products' | 's
   }
 };
 
+export interface AutoCompany {
+  _id: string;
+  name: string;
+  logo?: string;
+  image?: string;
+  description?: string;
+}
+
 export interface Product {
   _id: string;
   title: string;
@@ -30,6 +38,10 @@ export interface Product {
   createdAt: string;
   updatedAt: string;
   benefits?: string[]; // <-- Added for dynamic product features
+  category?: string | Category;
+  brand?: string | Brand;
+  featured?: boolean;
+  autoCompanies?: string[];
 }
 
 export interface Service {
@@ -40,6 +52,7 @@ export interface Service {
   createdAt: string;
   updatedAt: string;
   benefits?: string[];
+  tags?: string[];
 }
 
 export interface Blog {
@@ -51,6 +64,22 @@ export interface Blog {
   featuredImage?: string;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface Category {
+  _id: string;
+  name: string;
+  image?: string;
+  description?: string;
+}
+
+export interface Brand {
+  _id: string;
+  name: string;
+  image?: string;
+  description?: string;
+  logo?: string;
+  features?: string[];
 }
 
 // Utility function to generate slug
@@ -213,6 +242,54 @@ export const blogsApi = {
     } catch (error) {
       console.error('Error fetching blog:', error);
       return null;
+    }
+  }
+}; 
+
+export const categoriesApi = {
+  getAll: async (): Promise<Category[]> => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/categories`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch categories');
+      }
+      const data = await response.json();
+      return Array.isArray(data) ? data : [];
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+      return [];
+    }
+  }
+}; 
+
+export const brandsApi = {
+  getAll: async (): Promise<Brand[]> => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/brands`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch brands');
+      }
+      const data = await response.json();
+      return Array.isArray(data) ? data : [];
+    } catch (error) {
+      console.error('Error fetching brands:', error);
+      return [];
+    }
+  }
+}; 
+
+export const companiesApi = {
+  getAll: async (): Promise<AutoCompany[]> => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/autocompanies`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch auto companies');
+      }
+      const data = await response.json();
+      return Array.isArray(data) ? data : [];
+    } catch (error) {
+      console.error('Error fetching auto companies:', error);
+      return [];
     }
   }
 }; 

@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
 
     if (image && image.size > 0) {
       const buffer = Buffer.from(await image.arrayBuffer());
-      const uploadDir = path.join(process.cwd(), "public", "uploads", "quotes");
+      const uploadDir = path.join(process.cwd(), "public", "uploads", "querys");
       await fs.mkdir(uploadDir, { recursive: true });
       const ext = path.extname(image.name) || ".jpg";
       const fileName = `${Date.now()}-${Math.random().toString(36).slice(2,8)}${ext}`;
@@ -27,13 +27,13 @@ export async function POST(req: NextRequest) {
       await fs.writeFile(filePath, buffer);
     }
 
-    // Simulate saving the quote (no database)
+    // Simulate saving the query (no database)
     // Optionally, you could write to a local file or just return success
     // For static export, just return success
 
     return NextResponse.json({ success: true });
   } catch (err) {
-    console.error("Quote API error:", err);
-    return NextResponse.json({ error: "Failed to submit quote." }, { status: 500 });
+    console.error("Query API error:", err);
+    return NextResponse.json({ error: "Failed to submit query." }, { status: 500 });
   }
 } 

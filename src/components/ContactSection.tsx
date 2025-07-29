@@ -1,5 +1,5 @@
 import React from 'react';
-import GetAQuoteForm from './GetAQuoteForm';
+import GetAQueryForm from './GetAQueryForm';
 
 const ContactSection = () => (
   <div className="max-w-7xl mx-auto py-12 px-4">
@@ -10,7 +10,7 @@ const ContactSection = () => (
       </p>
     </div>
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-      <GetAQuoteForm title="Feedback/Query" layout="single" />
+      <GetAQueryForm title="Feedback/Query" layout="single" />
       {/* Contact Information */}
       <div className="space-y-8">
         <div className="bg-white rounded-xl shadow-lg p-8">
@@ -26,9 +26,9 @@ const ContactSection = () => (
                 <h3 className="font-semibold text-gray-900">Phone</h3>
                 <div className="space-y-1">
                   <p className="text-gray-600">Cell: 92-345-8428889</p>
-                  <p className="text-gray-600">Landline: 92-42-36305101<br/>92-42-36361648</p>
+                  <p className="text-gray-600">Landline: 92-42-36305101, +92-42-36361648</p>
                 </div>
-                <p className="text-sm text-gray-500">Available 24/7 for emergency services</p>
+              
               </div>
             </div>
             <div className="flex items-start space-x-4">
@@ -53,19 +53,18 @@ const ContactSection = () => (
               <div>
                 <h3 className="font-semibold text-gray-900">Address</h3>
                 <p className="text-gray-600">28, Mozang Road, Opp. Sir Ganga Ram Hospital, Lahore, Pakistan</p>
-                <a href="https://maps.google.com/?q=Punjab+Car+AC,+12+Montgomery+Road,+Lahore" target="_blank" rel="noopener noreferrer" className="text-punjabac-brand underline text-sm">View on Google Maps</a>
-              </div>
+               </div>
             </div>
           </div>
         </div>
         <div className="bg-punjabac-brand rounded-xl p-8 text-white">
-          <h3 className="text-xl font-bold mb-4">Emergency Service</h3>
-          <p className="mb-4">Need immediate assistance? We provide 24/7 emergency auto AC services.</p>
+          <h3 className="text-xl font-bold mb-4">Quick Service</h3>
+          <p className="mb-4">Need assistance? We provide the Best Auto AC services.</p>
           <a 
             href="tel:92-345-8428889" 
             className="inline-block bg-white text-punjabac-brand px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
           >
-            Call Emergency: 92-345-8428889
+            Call: 92-345-8428889
           </a>
         </div>
       </div>

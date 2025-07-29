@@ -331,7 +331,7 @@ body, html {
 .blog-content p,
 .blog-content ul,
 .blog-content ol,
-.blog-content blockquote {
+.blog-content blockquery {
   margin-bottom: 0.4rem;
 }
 
@@ -348,7 +348,7 @@ body, html {
   list-style: decimal inside;
 }
 
-.blog-content blockquote {
+.blog-content blockquery {
   border-left: 3px solid #00a6fb;
   background: #f0f8ff;
   color: #1a202c;

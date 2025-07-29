@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 interface Blog {
   _id: string;
@@ -66,12 +67,12 @@ const BlogCard: React.FC<BlogCardProps> = ({ blog }) => {
           {blog.content.replace(/<[^>]+>/g, '').slice(0, 150)}...
         </p>
         <span className="block mb-2 text-xs text-gray-400">{new Date(blog.createdAt).toLocaleDateString()}</span>
-        <a
+        <Link
           href={`/blogs/${blog.slug}`}
           className="mt-auto inline-block bg-punjabac-brand text-white px-5 py-2 rounded-lg font-semibold hover:bg-punjabac-brand-light transition-colors text-center"
         >
           Read More
-        </a>
+        </Link>
       </div>
     </div>
   );
