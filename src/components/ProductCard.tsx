@@ -132,12 +132,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
               View Details
             </button>
           ) : (
-            <Link
-              href={`/products/${slug}`}
-              className="flex-1 bg-punjabac-brand text-white py-3 px-4 rounded-lg font-semibold hover:bg-punjabac-brand-light transition-colors text-center"
-            >
-              View Details
-            </Link>
+          <Link
+            href={`/products/${slug}`}
+            className="flex-1 bg-punjabac-brand text-white py-3 px-4 rounded-lg font-semibold hover:bg-punjabac-brand-light transition-colors text-center"
+          >
+            View Details
+          </Link>
           )}
         </div>
       </div>
