@@ -224,7 +224,7 @@ export const blogsApi = {
         throw new Error('Failed to fetch blogs');
       }
       const data = await response.json();
-      return Array.isArray(data) ? data.filter(blog => blog.status === 'published') : [];
+      return Array.isArray(data) ? data : [];
     } catch (error) {
       console.error('Error fetching blogs:', error);
       return [];
