@@ -13,7 +13,6 @@ const Services = () => {
     const fetchServices = async () => {
       try {
         const data = await servicesApi.getAll();
-        console.log('Fetched services:', data); // Debug log
         setServices(data);
       } catch (error) {
         console.error('Error fetching services:', error);

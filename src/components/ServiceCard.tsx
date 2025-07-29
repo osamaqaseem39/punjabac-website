@@ -22,6 +22,8 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
   showHoverEffects = true,
   className = ''
 }) => {
+  console.log('ServiceCard service:', service);
+  debugger;
   const [imageError, setImageError] = useState(false);
   const [imageLoading, setImageLoading] = useState(true);
 
@@ -165,18 +167,26 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
         {/* Tags */}
         {service.tags && service.tags.length > 0 && (
           <div className="mb-4 flex flex-wrap gap-2">
-            {service.tags.map((tag: string, idx: number) => (
-              <span key={idx} className="inline-block bg-punjabac-brand/10 text-punjabac-brand px-3 py-1 rounded-full text-xs font-medium">{tag}</span>
-            ))}
+            {service.tags.map((tag: any, idx: number) => {
+              console.log('Tag:', tag, typeof tag);
+              return (
+                <span key={idx} className="inline-block bg-punjabac-brand/10 text-punjabac-brand px-3 py-1 rounded-full text-xs font-medium">
+                  {typeof tag === 'string' ? tag : tag?.name || 'Tag'}
+                </span>
+              );
+            })}
           </div>
         )}
 
         {/* Benefits List */}
         {service.benefits && service.benefits.length > 0 && (
           <ul className="mb-6 pl-5 list-disc text-sm text-gray-700">
-            {service.benefits.map((benefit, idx) => (
-              <li key={idx}>{benefit}</li>
-            ))}
+            {service.benefits.map((benefit: any, idx) => {
+              console.log('Benefit:', benefit, typeof benefit);
+              return (
+                <li key={idx}>{typeof benefit === 'string' ? benefit : benefit?.name || 'Benefit'}</li>
+              );
+            })}
           </ul>
         )}
 

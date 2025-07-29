@@ -1,30 +1,16 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { usePathname } from 'next/navigation';
 
 const TOTAL_DURATION = 3000; // 3 seconds
 const FADE_OUT_DURATION = 700; // ms, should match CSS
 
 const BRAND_COLOR = '#001a33';
 
-interface PreloaderProps {
-  showOnHomeOnly?: boolean;
-}
-
-const Preloader: React.FC<PreloaderProps> = ({ showOnHomeOnly = true }) => {
+const Preloader = () => {
   const [fadeOut, setFadeOut] = useState(false);
   const [hidden, setHidden] = useState(false);
-  const pathname = usePathname();
-
-  // Only show preloader on home page if showOnHomeOnly is true
-  const shouldShow = showOnHomeOnly ? pathname === '/' : true;
 
   useEffect(() => {
-    if (!shouldShow) {
-      setHidden(true);
-      return;
-    }
-
     const fadeOutTimer = setTimeout(() => setFadeOut(true), TOTAL_DURATION);
     const hideTimer = setTimeout(() => setHidden(true), TOTAL_DURATION + FADE_OUT_DURATION);
     
@@ -32,9 +18,9 @@ const Preloader: React.FC<PreloaderProps> = ({ showOnHomeOnly = true }) => {
       clearTimeout(fadeOutTimer);
       clearTimeout(hideTimer);
     };
-  }, [shouldShow]);
+  }, []);
 
-  if (hidden || !shouldShow) return null;
+  if (hidden) return null;
 
   return (
     <div

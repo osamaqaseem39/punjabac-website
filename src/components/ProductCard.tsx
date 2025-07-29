@@ -24,6 +24,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
   showHoverEffects = true,
   onClick
 }) => {
+  console.log('ProductCard product:', product);
+  debugger;
   const slug = `${product.title.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-')}-${product._id}`;
   
   // Get image URL using utility function
@@ -91,7 +93,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         {showCategoryBadge && product.category && (
           <div className="absolute top-4 left-4">
             <span className="bg-punjabac-brand text-white px-3 py-1 rounded-full text-xs font-medium">
-              {typeof product.category === 'string' ? product.category : product.category.name}
+              {typeof product.category === 'string' ? product.category : (product.category as any)?.name || 'Product'}
             </span>
           </div>
         )}
