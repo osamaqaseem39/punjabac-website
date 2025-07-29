@@ -6,8 +6,12 @@ export async function generateStaticParams() {
   try {
     console.log('Generating static params for blogs...');
     const blogs = await blogsApi.getAll();
-    console.log('Found', blogs.length, 'published blogs for static generation');
-    return blogs.map((blog: Blog) => ({ slug: blog.slug }));
+    console.log('Found', blogs.length, 'blogs for static generation');
+    return blogs
+      .filter((blog: Blog) => blog.status === 'published' && blog.slug)
+      .map((blog: Blog) => ({ 
+        slug: blog.slug 
+      }));
   } catch (error) {
     console.error('Error generating static params for blogs:', error);
     return [];

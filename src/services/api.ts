@@ -240,11 +240,25 @@ export const blogsApi = {
       const blog = await response.json();
       return blog.status === 'published' ? blog : null;
     } catch (error) {
-      console.error('Error fetching blog:', error);
+      console.error('Error fetching blog by slug:', error);
+      return null;
+    }
+  },
+
+  getById: async (id: string): Promise<Blog | null> => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/blogs/id/${id}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch blog');
+      }
+      const blog = await response.json();
+      return blog.status === 'published' ? blog : null;
+    } catch (error) {
+      console.error('Error fetching blog by ID:', error);
       return null;
     }
   }
-}; 
+};
 
 export const categoriesApi = {
   getAll: async (): Promise<Category[]> => {

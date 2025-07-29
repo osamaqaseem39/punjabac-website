@@ -27,6 +27,7 @@ const MenuNav = () => {
         const featuredProducts = data.filter(product => product.featured === true);
         setProducts(featuredProducts.slice(0, 10));
       } catch (error) {
+        console.error('Error fetching products:', error);
         setProducts([]);
       }
     };
@@ -35,6 +36,7 @@ const MenuNav = () => {
         const cats = await categoriesApi.getAll();
         setCategories(cats);
       } catch (error) {
+        console.error('Error fetching categories:', error);
         setCategories([]);
       }
     };
@@ -43,18 +45,23 @@ const MenuNav = () => {
         const brs = await brandsApi.getAll();
         setBrands(brs);
       } catch (error) {
+        console.error('Error fetching brands:', error);
         setBrands([]);
       }
     };
-    fetchProducts();
-    fetchCategories();
-    fetchBrands();
-    setLoading(false);
+    
+    const fetchData = async () => {
+      setLoading(true);
+      await Promise.all([fetchProducts(), fetchCategories(), fetchBrands()]);
+      setLoading(false);
+    };
+    
+    fetchData();
   }, []);
 
   return (
     <nav aria-label="Main Navigation">
-      <ul className="menu-nav flex space-x-16 items-center">
+      <ul className="menu-nav flex space-x-8 items-center">
         <li>
           <Link href="/" className={pathname === '/' ? 'text-punjabac-brand font-bold underline' : ''}>Home</Link>
         </li>
@@ -99,7 +106,7 @@ const MenuNav = () => {
             ) : categories.map((cat) => (
               <li key={cat._id}>
                 <Link href={`/products?category=${cat._id}`} className="block px-4 py-2 hover:bg-gray-100 text-sm truncate">
-                  {cat.name}
+                  {cat.name || 'Unnamed Category'}
                 </Link>
               </li>
             ))}
@@ -113,7 +120,7 @@ const MenuNav = () => {
             ) : brands.map((brand) => (
               <li key={brand._id}>
                 <Link href={`/products?brand=${brand._id}`} className="block px-4 py-2 hover:bg-gray-100 text-sm truncate">
-                  {brand.name}
+                  {brand.name || 'Unnamed Brand'}
                 </Link>
               </li>
             ))}
@@ -127,16 +134,16 @@ const MenuNav = () => {
             ) : products.length > 0 ? (
               <>
                 {products.map((product) => {
-                  const slug = productsApi.generateSlug(product.title, product._id);
+                  const slug = productsApi.generateSlug(product.title || 'Untitled Product', product._id);
                   const productPath = `/products/${slug}`;
                   return (
                     <li key={product._id}>
                       <Link 
                         href={productPath} 
                         className={`block px-4 py-2 hover:bg-gray-100 text-sm truncate${pathname === productPath ? ' bg-gray-100 text-punjabac-brand font-bold' : ''}`}
-                        title={product.title}
+                        title={product.title || 'Untitled Product'}
                       >
-                        {product.title}
+                        {product.title || 'Untitled Product'}
                       </Link>
                     </li>
                   );
