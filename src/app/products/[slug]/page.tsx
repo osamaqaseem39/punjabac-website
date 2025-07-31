@@ -1,35 +1,40 @@
-import React from 'react';
-import Link from 'next/link';
-import { productsApi, companiesApi, categoriesApi, brandsApi } from '../../../services/api';
-import AutoCompanies from '../../../components/AutoCompanies';
-import Image from 'next/image';
-import ProductDescription from '../../../components/ProductDescription';
-import ProductImageGallery from '../../../components/ProductImageGallery';
+"use client";
 
-export async function generateStaticParams() {
-  try {
-    const products = await productsApi.getAll();
-    return products.map(product => ({
-      slug: productsApi.generateSlug(product.title, product._id)
-    }));
-  } catch (error) {
-    console.error('Error generating static params for products:', error);
-    return [];
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import { productsApi, companiesApi, categoriesApi, brandsApi } from "../../../services/api";
+import type { Product, AutoCompany, Category, Brand, Benefit } from "../../../services/api";
+import AutoCompanies from "../../../components/AutoCompanies";
+import ProductDescription from "../../../components/ProductDescription";
+import ProductImageGallery from "../../../components/ProductImageGallery";
+
+const ProductDetailPage = ({ params }: { params: { slug: string } }) => {
+  const { slug } = params;
+  const [product, setProduct] = useState<Product | null>(null);
+  const [allCompanies, setAllCompanies] = useState<AutoCompany[]>([]);
+  const [allCategories, setAllCategories] = useState<Category[]>([]);
+  const [allBrands, setAllBrands] = useState<Brand[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      const prod = await productsApi.getBySlug(slug);
+      const companies = await companiesApi.getAll();
+      const categories = await categoriesApi.getAll();
+      const brands = await brandsApi.getAll();
+      setProduct(prod);
+      setAllCompanies(companies);
+      setAllCategories(categories);
+      setAllBrands(brands);
+      setLoading(false);
+    };
+    fetchData();
+  }, [slug]);
+
+  if (loading) {
+    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
   }
-}
-
-// Server Component that fetches data
-async function ProductDetailPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
-  
-  // Fetch product, all companies, categories, and brands
-  const [product, allCompanies, allCategories, allBrands] = await Promise.all([
-    productsApi.getBySlug(slug),
-    companiesApi.getAll(),
-    categoriesApi.getAll(),
-    brandsApi.getAll()
-  ]);
-
   if (!product) {
     return (
       <main className="min-h-screen bg-gradient-to-br from-gray-50 to-indigo-50">
@@ -51,19 +56,14 @@ async function ProductDetailPage({ params }: { params: Promise<{ slug: string }>
     );
   }
 
-  // Get category and brand details
-  const productCategoryId = typeof product.category === 'string' ? product.category : product.category?._id;
-  const productBrandId = typeof product.brand === 'string' ? product.brand : product.brand?._id;
-  
-  const category = productCategoryId ? allCategories.find(cat => cat._id === productCategoryId) : null;
-  const brand = productBrandId ? allBrands.find(b => b._id === productBrandId) : null;
-
-  // Filter compatible auto companies
-  const compatibleCompanies = product.autoCompanies 
-    ? allCompanies.filter(company => product.autoCompanies!.includes(company._id))
+  const productCategoryId = typeof product.category === "string" ? product.category : product.category?._id;
+  const productBrandId = typeof product.brand === "string" ? product.brand : product.brand?._id;
+  const category = productCategoryId ? allCategories.find((cat) => cat._id === productCategoryId) : null;
+  const brand = productBrandId ? allBrands.find((b) => b._id === productBrandId) : null;
+  const compatibleCompanies = product.autoCompanies
+    ? allCompanies.filter((company) => product.autoCompanies && product.autoCompanies.includes(company._id))
     : [];
-
-  const allImages = product.featuredImage 
+  const allImages = product.featuredImage
     ? [product.featuredImage, ...(product.gallery || [])]
     : product.gallery || [];
 
@@ -132,7 +132,6 @@ async function ProductDetailPage({ params }: { params: Promise<{ slug: string }>
                     </svg>
                     Added on {new Date(product.createdAt).toLocaleDateString()}
                   </div>
-                  
                   {product.gallery && product.gallery.length > 0 && (
                     <div className="flex items-center text-sm text-gray-500">
                       <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -151,7 +150,6 @@ async function ProductDetailPage({ params }: { params: Promise<{ slug: string }>
                     </svg>
                     Contact for Information
                   </Link>
-                  
                 </div>
 
                 {/* Product Features */}
@@ -159,7 +157,7 @@ async function ProductDetailPage({ params }: { params: Promise<{ slug: string }>
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">Product Benefits</h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {product.benefits && product.benefits.length > 0 ? (
-                      product.benefits.map((benefit: any, idx) => (
+                      product.benefits.map((benefit: Benefit, idx: number) => (
                         <div key={idx} className="flex items-center">
                           <div className="w-8 h-8 bg-punjabac-brand/10 rounded-full flex items-center justify-center mr-3">
                             <svg className="w-4 h-4 text-punjabac-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -167,7 +165,7 @@ async function ProductDetailPage({ params }: { params: Promise<{ slug: string }>
                             </svg>
                           </div>
                           <span className="text-gray-700">
-                            {typeof benefit === 'string' ? benefit : benefit.name}
+                            {typeof benefit === "string" ? benefit : benefit.name}
                           </span>
                         </div>
                       ))
@@ -195,14 +193,14 @@ async function ProductDetailPage({ params }: { params: Promise<{ slug: string }>
             Our experts are here to help you find the perfect auto AC parts for your vehicle.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a 
-              href="/contact" 
+            <a
+              href="/contact"
               className="bg-white text-punjabac-brand px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
             >
               Send Query/Feedback
             </a>
-            <a 
-              href="tel:92-345-8428889" 
+            <a
+              href="tel:92-345-8428889"
               className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-punjabac-brand transition-colors"
             >
               Call Now: 92-345-8428889
@@ -212,6 +210,6 @@ async function ProductDetailPage({ params }: { params: Promise<{ slug: string }>
       </section>
     </main>
   );
-}
+};
 
 export default ProductDetailPage; 
