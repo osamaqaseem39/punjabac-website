@@ -157,7 +157,7 @@ const ProductDetailPage = ({ params }: { params: { slug: string } }) => {
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">Product Benefits</h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {product.benefits && product.benefits.length > 0 ? (
-                      product.benefits.map((benefit: Benefit, idx: number) => (
+                      product.benefits.map((benefit: string | Benefit, idx: number) => (
                         <div key={idx} className="flex items-center">
                           <div className="w-8 h-8 bg-punjabac-brand/10 rounded-full flex items-center justify-center mr-3">
                             <svg className="w-4 h-4 text-punjabac-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
