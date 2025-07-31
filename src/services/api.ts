@@ -37,7 +37,7 @@ export interface Product {
   gallery?: string[];
   createdAt: string;
   updatedAt: string;
-  benefits?: string[]; // <-- Added for dynamic product features
+  benefits?: string[] | Benefit[]; // <-- Added for dynamic product features
   category?: string | Category;
   brand?: string | Brand;
   featured?: boolean;
@@ -51,7 +51,7 @@ export interface Service {
   featuredImage?: string;
   createdAt: string;
   updatedAt: string;
-  benefits?: string[];
+  benefits?: string[] | Benefit[];
   tags?: string[];
 }
 
@@ -80,6 +80,13 @@ export interface Brand {
   description?: string;
   logo?: string;
   features?: string[];
+}
+
+export interface Benefit {
+  _id: string;
+  name: string;
+  description?: string;
+  type: 'product' | 'service';
 }
 
 // Utility function to generate slug
@@ -281,7 +288,7 @@ export const brandsApi = {
 export const companiesApi = {
   getAll: async (): Promise<AutoCompany[]> => {
     try {
-      const response = await fetch(`${API_BASE_URL}/autocompanies`);
+      const response = await fetch(`${API_BASE_URL}/autoCompanies`); // <-- fixed case
       if (!response.ok) {
         throw new Error('Failed to fetch auto companies');
       }

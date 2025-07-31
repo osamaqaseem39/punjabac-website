@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { productsApi, companiesApi } from '../../../services/api';
+import { productsApi, companiesApi, categoriesApi, brandsApi } from '../../../services/api';
 import AutoCompanies from '../../../components/AutoCompanies';
 import Image from 'next/image';
 import ProductDescription from '../../../components/ProductDescription';
@@ -22,10 +22,12 @@ export async function generateStaticParams() {
 async function ProductDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   
-  // Fetch product and all companies
-  const [product, allCompanies] = await Promise.all([
+  // Fetch product, all companies, categories, and brands
+  const [product, allCompanies, allCategories, allBrands] = await Promise.all([
     productsApi.getBySlug(slug),
-    companiesApi.getAll()
+    companiesApi.getAll(),
+    categoriesApi.getAll(),
+    brandsApi.getAll()
   ]);
 
   if (!product) {
@@ -48,6 +50,13 @@ async function ProductDetailPage({ params }: { params: Promise<{ slug: string }>
       </main>
     );
   }
+
+  // Get category and brand details
+  const productCategoryId = typeof product.category === 'string' ? product.category : product.category?._id;
+  const productBrandId = typeof product.brand === 'string' ? product.brand : product.brand?._id;
+  
+  const category = productCategoryId ? allCategories.find(cat => cat._id === productCategoryId) : null;
+  const brand = productBrandId ? allBrands.find(b => b._id === productBrandId) : null;
 
   // Filter compatible auto companies
   const compatibleCompanies = product.autoCompanies 
@@ -91,13 +100,27 @@ async function ProductDetailPage({ params }: { params: Promise<{ slug: string }>
               <div className="p-8 lg:p-12">
                 <div className="mb-6">
                   <span className="bg-punjabac-brand/10 text-punjabac-brand px-3 py-1 rounded-full text-sm font-medium">
-                    Auto AC Parts
+                    Auto Parts
                   </span>
                 </div>
 
                 <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
                   {product.title}
                 </h1>
+
+                {/* Category and Brand Badges */}
+                <div className="flex flex-wrap items-center gap-3 mb-6">
+                  {category && (
+                    <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+                      {category.name}
+                    </span>
+                  )}
+                  {brand && (
+                    <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
+                      {brand.name}
+                    </span>
+                  )}
+                </div>
 
                 <ProductDescription description={product.description} />
 
@@ -133,21 +156,23 @@ async function ProductDetailPage({ params }: { params: Promise<{ slug: string }>
 
                 {/* Product Features */}
                 <div className="mt-8 pt-8 border-t border-gray-200">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Product Features</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Product Benefits</h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {product.benefits && product.benefits.length > 0 ? (
-                      product.benefits.map((benefit, idx) => (
+                      product.benefits.map((benefit: any, idx) => (
                         <div key={idx} className="flex items-center">
                           <div className="w-8 h-8 bg-punjabac-brand/10 rounded-full flex items-center justify-center mr-3">
                             <svg className="w-4 h-4 text-punjabac-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                             </svg>
                           </div>
-                          <span className="text-gray-700">{benefit}</span>
+                          <span className="text-gray-700">
+                            {typeof benefit === 'string' ? benefit : benefit.name}
+                          </span>
                         </div>
                       ))
                     ) : (
-                      <span className="text-gray-500">No features listed for this product.</span>
+                      <span className="text-gray-500">No benefits listed for this product.</span>
                     )}
                   </div>
                 </div>

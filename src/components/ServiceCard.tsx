@@ -22,8 +22,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
   showHoverEffects = true,
   className = ''
 }) => {
-  console.log('ServiceCard service:', service);
-  debugger;
+  
   const [imageError, setImageError] = useState(false);
   const [imageLoading, setImageLoading] = useState(true);
 
@@ -168,7 +167,6 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
         {service.tags && service.tags.length > 0 && (
           <div className="mb-4 flex flex-wrap gap-2">
             {service.tags.map((tag: any, idx: number) => {
-              console.log('Tag:', tag, typeof tag);
               return (
                 <span key={idx} className="inline-block bg-punjabac-brand/10 text-punjabac-brand px-3 py-1 rounded-full text-xs font-medium">
                   {typeof tag === 'string' ? tag : tag?.name || 'Tag'}
@@ -180,14 +178,29 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
 
         {/* Benefits List */}
         {service.benefits && service.benefits.length > 0 && (
-          <ul className="mb-6 pl-5 list-disc text-sm text-gray-700">
-            {service.benefits.map((benefit: any, idx) => {
-              console.log('Benefit:', benefit, typeof benefit);
+          <div className="mb-6">
+            <h4 className="text-sm font-semibold text-gray-700 mb-3">Key Benefits:</h4>
+            <div className="flex flex-wrap gap-2">
+              {service.benefits.slice(0, 4).map((benefit: any, idx) => {
               return (
-                <li key={idx}>{typeof benefit === 'string' ? benefit : benefit?.name || 'Benefit'}</li>
+                  <span 
+                    key={idx} 
+                    className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200"
+                  >
+                    <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    {typeof benefit === 'string' ? benefit : benefit?.name || 'Benefit'}
+                  </span>
               );
             })}
-          </ul>
+              {service.benefits.length > 4 && (
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600">
+                  +{service.benefits.length - 4} more
+                </span>
+              )}
+            </div>
+          </div>
         )}
 
         {/* Service Highlights */}

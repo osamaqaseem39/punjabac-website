@@ -77,7 +77,12 @@ async function ServiceDetailPage({ params }: { params: Promise<{ slug: string }>
                   </svg>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900">{benefit.text || benefit}</h3>
+                  <h3 className="font-semibold text-gray-900">
+                    {typeof benefit === 'string' ? benefit : benefit.name}
+                  </h3>
+                  {typeof benefit === 'object' && benefit.description && (
+                    <p className="text-gray-600 text-sm mt-1">{benefit.description}</p>
+                  )}
                 </div>
               </div>
             ))}

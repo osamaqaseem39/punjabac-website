@@ -54,7 +54,7 @@ const MenuNav = () => {
 
   return (
     <nav aria-label="Main Navigation">
-      <ul className="menu-nav flex space-x-16 items-center">
+      <ul className="menu-nav flex space-x-8 items-center">
         <li>
           <Link href="/" className={pathname === '/' ? 'text-punjabac-brand font-bold underline' : ''}>Home</Link>
         </li>
@@ -73,8 +73,7 @@ const MenuNav = () => {
             <li><Link href="/company-profile" className={`block px-4 py-2 hover:bg-gray-100${pathname.startsWith('/company-profile') ? ' bg-gray-100 text-punjabac-brand font-bold' : ''}`}>Company Profile</Link></li>
             <li><Link href="/sub-dealers" className={`block px-4 py-2 hover:bg-gray-100${pathname.startsWith('/sub-dealers') ? ' bg-gray-100 text-punjabac-brand font-bold' : ''}`}>Sub Dealers</Link></li>
             
-            <li><Link href="/blogs" className={`block px-4 py-2 hover:bg-gray-100${pathname.startsWith('/blogs') ? ' bg-gray-100 text-punjabac-brand font-bold' : ''}`}>Blogs</Link></li>
-          </ul>
+   </ul>
         </li>
         <li>
           <Link href="/services" className={pathname.startsWith('/services') ? 'text-punjabac-brand font-bold underline' : ''}>Services</Link>
@@ -158,6 +157,8 @@ const MenuNav = () => {
             )}
           </ul>
         </li>
+        <li><Link href="/blogs" className={`block px-4 py-2 hover:bg-gray-100${pathname.startsWith('/blogs') ? ' bg-gray-100 text-punjabac-brand font-bold' : ''}`}>Blogs</Link></li>
+       
         <li>
           <Link href="/contact" className={pathname.startsWith('/contact') ? 'text-punjabac-brand font-bold underline' : ''}>Contact Us</Link>
         </li>

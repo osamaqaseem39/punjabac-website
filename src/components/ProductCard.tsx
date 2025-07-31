@@ -24,8 +24,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
   showHoverEffects = true,
   onClick
 }) => {
-  console.log('ProductCard product:', product);
-  debugger;
+ 
+  
   const slug = `${product.title.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-')}-${product._id}`;
   
   // Get image URL using utility function
@@ -33,7 +33,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   // Handle image error
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    console.log('Image failed to load:', e.currentTarget.src);
     e.currentTarget.style.display = 'none';
     const fallbackDiv = e.currentTarget.nextElementSibling as HTMLElement;
     if (fallbackDiv) {
@@ -122,6 +121,31 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 {product.gallery.length} images
               </span>
             )}
+          </div>
+        )}
+
+        {/* Benefits */}
+        {product.benefits && product.benefits.length > 0 && (
+          <div className="mb-4">
+            <h4 className="text-sm font-semibold text-gray-700 mb-2">Key Benefits:</h4>
+            <div className="flex flex-wrap gap-2">
+              {product.benefits.slice(0, 3).map((benefit: any, index: number) => (
+                <span 
+                  key={index} 
+                  className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-punjabac-brand/10 text-punjabac-brand border border-punjabac-brand/20"
+                >
+                  <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                  {typeof benefit === 'string' ? benefit : benefit.name}
+                </span>
+              ))}
+              {product.benefits.length > 3 && (
+                <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600">
+                  +{product.benefits.length - 3} more
+                </span>
+              )}
+            </div>
           </div>
         )}
 
