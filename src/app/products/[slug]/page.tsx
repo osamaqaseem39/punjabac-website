@@ -31,6 +31,7 @@ const ProductDetailPage = ({ params }: { params: { slug: string } }) => {
     };
     fetchData();
   }, [slug]);
+  
 
   if (loading) {
     return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
