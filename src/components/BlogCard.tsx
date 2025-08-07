@@ -1,6 +1,44 @@
 import React from 'react';
 import Link from 'next/link';
 
+const formatText = (text: string) => {
+  // Replace headings
+  text = text.replace(/^# (.+)$/gm, '<h1>$1</h1>');
+  text = text.replace(/^## (.+)$/gm, '<h2>$1</h2>');
+  text = text.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+
+  // Replace bold and italic
+  text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  text = text.replace(/__(.+?)__/g, '<em>$1</em>');
+
+  // Replace lists
+  text = text.replace(/^- (.+)$/gm, '<li>$1</li>').replace(/((?:<li>.*<\/li>\n?)+)/g, '<ul>$1</ul>');
+  text = text.replace(/^\d+\. (.+)$/gm, '<li>$1</li>').replace(/((?:<li>.*<\/li>\n?)+)/g, '<ol>$1</ol>');
+
+  // Replace code
+  text = text.replace(/`(.+?)`/g, '<code>$1</code>');
+
+  // Replace blockquotes
+  text = text.replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>');
+
+  // Replace horizontal lines
+  text = text.replace(/^---$/gm, '<hr>');
+
+  // Replace links and images
+  text = text.replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" target="_blank">$1</a>');
+  text = text.replace(/!img\[(.+?)\]\((.+?)\)/g, '<img src="$2" alt="$1">');
+
+  // Replace alignment tags
+  text = text.replace(/<center>(.+?)<\/center>/g, '<div style="text-align: center">$1</div>');
+  text = text.replace(/<right>(.+?)<\/right>/g, '<div style="text-align: right">$1</div>');
+  text = text.replace(/<left>(.+?)<\/left>/g, '<div style="text-align: left">$1</div>');
+
+  // Replace newlines with <br>
+  text = text.replace(/\n/g, '<br>');
+
+  return text;
+};
+
 interface Blog {
   _id: string;
   title: string;
@@ -63,9 +101,12 @@ const BlogCard: React.FC<BlogCardProps> = ({ blog }) => {
         <h2 className="text-2xl font-bold mb-2 line-clamp-2 group-hover:text-punjabac-brand transition-colors">
           {blog.title}
         </h2>
-        <p className="text-gray-600 mb-4 line-clamp-3 min-h-[4.5rem]">
-          {blog.content.replace(/<[^>]+>/g, '').slice(0, 150)}...
-        </p>
+        <div 
+          className="text-gray-600 mb-4 line-clamp-3 min-h-[4.5rem]"
+          dangerouslySetInnerHTML={{ 
+            __html: formatText(blog.content.slice(0, 150)) + '...'
+          }}
+        />
         <span className="block mb-2 text-xs text-gray-400">{new Date(blog.createdAt).toLocaleDateString()}</span>
         <Link
           href={`/blogs/${blog.slug}`}

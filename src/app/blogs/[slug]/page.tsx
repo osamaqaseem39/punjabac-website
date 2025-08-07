@@ -5,6 +5,44 @@ import axios from 'axios';
 import Link from 'next/link';
 import type { Blog } from '../../../services/api';
 
+const formatText = (text: string) => {
+  // Replace headings
+  text = text.replace(/^# (.+)$/gm, '<h1>$1</h1>');
+  text = text.replace(/^## (.+)$/gm, '<h2>$1</h2>');
+  text = text.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+
+  // Replace bold and italic
+  text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  text = text.replace(/__(.+?)__/g, '<em>$1</em>');
+
+  // Replace lists
+  text = text.replace(/^- (.+)$/gm, '<li>$1</li>').replace(/((?:<li>.*<\/li>\n?)+)/g, '<ul>$1</ul>');
+  text = text.replace(/^\d+\. (.+)$/gm, '<li>$1</li>').replace(/((?:<li>.*<\/li>\n?)+)/g, '<ol>$1</ol>');
+
+  // Replace code
+  text = text.replace(/`(.+?)`/g, '<code>$1</code>');
+
+  // Replace blockquotes
+  text = text.replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>');
+
+  // Replace horizontal lines
+  text = text.replace(/^---$/gm, '<hr>');
+
+  // Replace links and images
+  text = text.replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" target="_blank">$1</a>');
+  text = text.replace(/!img\[(.+?)\]\((.+?)\)/g, '<img src="$2" alt="$1">');
+
+  // Replace alignment tags
+  text = text.replace(/<center>(.+?)<\/center>/g, '<div style="text-align: center">$1</div>');
+  text = text.replace(/<right>(.+?)<\/right>/g, '<div style="text-align: right">$1</div>');
+  text = text.replace(/<left>(.+?)<\/left>/g, '<div style="text-align: left">$1</div>');
+
+  // Replace newlines with <br>
+  text = text.replace(/\n/g, '<br>');
+
+  return text;
+};
+
 const BlogDetailPage = ({ params }: { params: { slug: string } }) => {
   const { slug } = params;
   const [blog, setBlog] = useState<Blog | null>(null);
@@ -69,7 +107,12 @@ const BlogDetailPage = ({ params }: { params: { slug: string } }) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden p-8">
             <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">{blog.title}</h1>
-            <p className="text-gray-700 mb-6">{blog.content}</p>
+            <div 
+              className="text-gray-700 mb-6 blog-content"
+              dangerouslySetInnerHTML={{ 
+                __html: formatText(blog.content) 
+              }}
+            />
             {/* Add more blog details here as needed */}
           </div>
         </div>
