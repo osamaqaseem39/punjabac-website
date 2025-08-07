@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
 import type { Blog } from '../../../services/api';
+import { getImageUrl, getBlogImageUrl } from '../../../services/api';
 
 const formatText = (text: string) => {
   // Replace headings
@@ -30,7 +31,11 @@ const formatText = (text: string) => {
 
   // Replace links and images
   text = text.replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" target="_blank">$1</a>');
-  text = text.replace(/!img\[(.+?)\]\((.+?)\)/g, '<img src="$2" alt="$1">');
+  text = text.replace(/!img\[(.+?)\]\((.+?)\)/g, (match, alt, src) => {
+    const processedUrl = getBlogImageUrl(src) || src;
+    console.log('Image processing:', { original: src, processed: processedUrl });
+    return `<img src="${processedUrl}" alt="${alt}" class="blog-img" onerror="this.style.display='none'">`;
+  });
 
   // Replace alignment tags
   text = text.replace(/<center>(.+?)<\/center>/g, '<div style="text-align: center">$1</div>');
@@ -108,6 +113,21 @@ const BlogDetailPage = ({ params }: { params: { slug: string } }) => {
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden p-8">
             <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">{blog.title}</h1>
             
+            {/* Featured Image */}
+            {blog.featuredImage && (
+              <div className="mb-6">
+                <img
+                  src={getBlogImageUrl(blog.featuredImage) || blog.featuredImage}
+                  alt={blog.title}
+                  className="w-full h-64 md:h-80 object-cover rounded-lg shadow-lg"
+                  onError={(e) => {
+                    console.error('Featured image failed to load:', blog.featuredImage);
+                    e.currentTarget.style.display = 'none';
+                  }}
+                />
+              </div>
+            )}
+            
             {/* Blog Meta Information */}
             <div className="flex items-center gap-4 mb-6 text-sm text-gray-500 border-b border-gray-200 pb-4">
               <span>Published: {new Date(blog.createdAt).toLocaleDateString()}</span>
@@ -121,6 +141,9 @@ const BlogDetailPage = ({ params }: { params: { slug: string } }) => {
               className="text-gray-700 mb-6 blog-content"
               dangerouslySetInnerHTML={{ 
                 __html: formatText(blog.content) 
+              }}
+              onError={(e) => {
+                console.error('Error loading blog content images:', e);
               }}
             />
 

@@ -28,7 +28,19 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
 
   // Get image URL using utility function
   const imageUrl = getImageUrl(service.featuredImage, 'services');
-  const slug = `/services/${service.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')}-${service._id}`;
+  // Generate slug using the same method as the API
+  const generateSlug = (title: string, id: string) => {
+    const cleanTitle = title
+      .toLowerCase()
+      .trim()
+      .replace(/[^\w\s-]/g, '') // Remove special characters except spaces and hyphens
+      .replace(/\s+/g, '-') // Replace spaces with hyphens
+      .replace(/-+/g, '-') // Replace multiple hyphens with single hyphen
+      .replace(/^-+|-+$/g, ''); // Remove leading/trailing hyphens
+    
+    return `${cleanTitle}-${id}`;
+  };
+  const slug = `/services/${generateSlug(service.title, service._id)}`;
 
   // Get service-specific icon based on title
   const getServiceIcon = (title: string) => {

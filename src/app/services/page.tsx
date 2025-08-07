@@ -16,6 +16,7 @@ const ServicesPage = () => {
       try {
         const data = await servicesApi.getAll();
         console.log('Fetched services:', data); // Debug log
+        console.log('Services count:', data.length); // Debug log
         setServices(data);
       } catch (error) {
         console.error('Error fetching services:', error);

@@ -14,10 +14,34 @@ export const getImageUrl = (imagePath: string | undefined, type: 'products' | 's
   
   if (imagePath.startsWith('http')) {
     return imagePath;
+  } else if (imagePath.startsWith('data:')) {
+    return imagePath;
   } else if (imagePath.startsWith('/uploads/')) {
     return `${ADMIN_BASE_URL}${imagePath}`;
   } else {
     return `${ADMIN_BASE_URL}/uploads/${type}/${imagePath}`;
+  }
+};
+
+// Utility function to handle blog image URLs
+export const getBlogImageUrl = (imagePath: string | undefined): string | null => {
+  if (!imagePath) return null;
+  
+  if (imagePath.startsWith('http')) {
+    return imagePath;
+  } else if (imagePath.startsWith('data:')) {
+    return imagePath;
+  } else if (imagePath.startsWith('/uploads/')) {
+    return `${ADMIN_BASE_URL}${imagePath}`;
+  } else {
+    // Try different possible paths for blog images
+    const possiblePaths = [
+      `${ADMIN_BASE_URL}/uploads/blogs/${imagePath}`,
+      `${ADMIN_BASE_URL}/uploads/products/${imagePath}`,
+      `${ADMIN_BASE_URL}/uploads/${imagePath}`,
+      imagePath
+    ];
+    return possiblePaths[0]; // Return the first one, let the browser handle 404s
   }
 };
 

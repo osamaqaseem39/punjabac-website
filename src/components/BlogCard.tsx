@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import { getImageUrl, getBlogImageUrl } from '../services/api';
 
 const formatText = (text: string) => {
   // Replace headings
@@ -26,7 +27,10 @@ const formatText = (text: string) => {
 
   // Replace links and images
   text = text.replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" target="_blank">$1</a>');
-  text = text.replace(/!img\[(.+?)\]\((.+?)\)/g, '<img src="$2" alt="$1">');
+  text = text.replace(/!img\[(.+?)\]\((.+?)\)/g, (match, alt, src) => {
+    const processedUrl = getBlogImageUrl(src) || src;
+    return `<img src="${processedUrl}" alt="${alt}" class="blog-img" onerror="this.style.display='none'">`;
+  });
 
   // Replace alignment tags
   text = text.replace(/<center>(.+?)<\/center>/g, '<div style="text-align: center">$1</div>');
@@ -70,13 +74,14 @@ const BlogCard: React.FC<BlogCardProps> = ({ blog }) => {
         {blog.featuredImage ? (
           <>
             <img
-              src={blog.featuredImage}
+              src={getBlogImageUrl(blog.featuredImage) || blog.featuredImage}
               alt={blog.title}
               className="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500"
               width={400}
               height={224}
               loading="lazy"
               style={{ objectFit: 'cover', width: '100%', height: '14rem' }}
+              onError={handleImageError}
             />
             {/* Fallback div - hidden by default, shown when image fails */}
             <div 
