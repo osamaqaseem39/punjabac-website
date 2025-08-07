@@ -107,13 +107,35 @@ const BlogDetailPage = ({ params }: { params: { slug: string } }) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden p-8">
             <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">{blog.title}</h1>
+            
+            {/* Blog Meta Information */}
+            <div className="flex items-center gap-4 mb-6 text-sm text-gray-500 border-b border-gray-200 pb-4">
+              <span>Published: {new Date(blog.createdAt).toLocaleDateString()}</span>
+              {blog.updatedAt !== blog.createdAt && (
+                <span>Updated: {new Date(blog.updatedAt).toLocaleDateString()}</span>
+              )}
+            </div>
+
+            {/* Blog Content */}
             <div 
               className="text-gray-700 mb-6 blog-content"
               dangerouslySetInnerHTML={{ 
                 __html: formatText(blog.content) 
               }}
             />
-            {/* Add more blog details here as needed */}
+
+            {/* Back to Blogs Link */}
+            <div className="mt-8 pt-6 border-t border-gray-200">
+              <Link 
+                href="/blogs" 
+                className="inline-flex items-center text-punjabac-brand hover:text-punjabac-brand-light transition-colors"
+              >
+                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+                Back to Blogs
+              </Link>
+            </div>
           </div>
         </div>
       </section>
